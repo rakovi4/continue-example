@@ -1,0 +1,8 @@
+rootProject.name = 'continue-example'
+
+include 'backend:domain'
+include 'backend:usecase'
+include 'backend:adapters:rest'
+include 'backend:adapters:h2'
+include 'backend:application'
+include 'acceptance'

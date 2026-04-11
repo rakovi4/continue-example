@@ -1,0 +1,14 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar.enabled = false
+jar.enabled = true
+
+dependencies {
+    implementation project(':backend:usecase')
+    implementation project(':backend:domain')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation project(':backend:application')
+}

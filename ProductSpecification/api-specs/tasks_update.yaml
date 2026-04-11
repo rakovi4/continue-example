@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Move Task
+  version: 1.0.0
+
+paths:
+  /api/v1/tasks/{id}:
+    patch:
+      summary: Update task column and position
+      operationId: updateTask
+      tags:
+        - tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: Task moved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardResponse'
+        '400':
+          description: Validation error (invalid column or negative position)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    UpdateTaskRequest:
+      type: object
+      required:
+        - column_id
+        - position
+      properties:
+        column_id:
+          type: integer
+          format: int64
+          example: 2
+        position:
+          type: integer
+          minimum: 0
+          example: 0
+
+    BoardResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnResponse'
+
+    ColumnResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        position:
+          type: integer
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+
+    TaskResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        position:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "VALIDATION_ERROR"
+        message:
+          type: string
+          example: "Position must be non-negative"
+        timestamp:
+          type: string
+          format: date-time

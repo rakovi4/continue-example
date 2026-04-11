@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Get Board
+  version: 1.0.0
+
+paths:
+  /api/v1/board:
+    get:
+      summary: Get board with columns and tasks
+      operationId: getBoard
+      tags:
+        - board
+      responses:
+        '200':
+          description: Board with columns and tasks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardResponse'
+
+components:
+  schemas:
+    BoardResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: "Kanban Board"
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnResponse'
+
+    ColumnResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: "To Do"
+        position:
+          type: integer
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+
+    TaskResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          example: "Set up CI/CD pipeline"
+        description:
+          type: string
+          example: "Configure GitHub Actions"
+        position:
+          type: integer
+        created_at:
+          type: string
+          format: date-time

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=375">
+    <title>Канбан — Доска с задачами</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8f9fa; color: #212529; min-height: 100vh; display: flex; flex-direction: column; }
+
+        .header { background: #fff; border-bottom: 1px solid #dee2e6; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+        .header h1 { font-size: 18px; font-weight: 700; }
+        .btn-icon { background: #228be6; color: #fff; border: none; width: 40px; height: 40px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        .tabs { display: flex; background: #fff; border-bottom: 1px solid #dee2e6; }
+        .tab { flex: 1; padding: 12px 0; text-align: center; font-size: 13px; font-weight: 500; color: #6c757d; cursor: pointer; border-bottom: 2px solid transparent; }
+        .tab.active { color: #228be6; border-bottom-color: #228be6; }
+        .tab-badge { font-size: 11px; font-weight: 600; color: #6c757d; background: #dee2e6; border-radius: 8px; padding: 1px 6px; margin-left: 4px; }
+
+        .column-content { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+
+        .task-card { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .task-card-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+        .task-card-desc { font-size: 13px; color: #6c757d; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Канбан-доска</h1>
+        <button class="btn-icon">
+            <i data-lucide="plus" style="width:20px;height:20px;"></i>
+        </button>
+    </header>
+
+    <div class="tabs">
+        <div class="tab active">К выполнению <span class="tab-badge">3</span></div>
+        <div class="tab">В работе <span class="tab-badge">0</span></div>
+        <div class="tab">Готово <span class="tab-badge">0</span></div>
+    </div>
+
+    <div class="column-content">
+        <div class="task-card">
+            <div class="task-card-title">Настроить CI/CD пайплайн</div>
+            <div class="task-card-desc">Настроить автоматическую сборку и деплой через GitHub Actions</div>
+        </div>
+        <div class="task-card">
+            <div class="task-card-title">Написать юнит-тесты</div>
+        </div>
+        <div class="task-card">
+            <div class="task-card-title">Обновить документацию API</div>
+            <div class="task-card-desc">Добавить описание новых эндпоинтов в Swagger</div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

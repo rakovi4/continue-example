@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400">
+    <title>Канбан — Задача перемещена в другую колонку</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8f9fa; color: #212529; min-height: 100vh; display: flex; flex-direction: column; }
+
+        .header { background: #fff; border-bottom: 1px solid #dee2e6; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+        .header h1 { font-size: 20px; font-weight: 700; }
+        .btn-primary { background: #228be6; color: #fff; border: none; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; padding: 0 16px; height: 40px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { background: #1c7ed6; }
+
+        .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 24px; flex: 1; }
+        .column { background: #f1f3f5; border-radius: 12px; display: flex; flex-direction: column; min-height: 0; }
+        .column-header { padding: 16px; display: flex; align-items: center; justify-content: space-between; }
+        .column-header h2 { font-size: 14px; font-weight: 600; }
+        .column-badge { font-size: 12px; font-weight: 600; color: #6c757d; background: #dee2e6; border-radius: 10px; padding: 2px 8px; }
+        .column:nth-child(1) { border-top: 4px solid #e7f5ff; }
+        .column:nth-child(2) { border-top: 4px solid #fff9db; }
+        .column:nth-child(3) { border-top: 4px solid #ebfbee; }
+        .column-body { flex: 1; padding: 0 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+
+        .task-card { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); cursor: grab; transition: box-shadow 0.15s; }
+        .task-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .task-card-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+        .task-card-desc { font-size: 13px; color: #6c757d; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* Highlight for recently moved task */
+        .task-card.just-moved { border: 2px solid #228be6; box-shadow: 0 2px 8px rgba(34,139,230,0.2); }
+    </style>
+</head>
+<body>
+    <!-- "Написать юнит-тесты" moved from К выполнению (position 1) to В работе (position 0) -->
+    <header class="header">
+        <h1>Канбан-доска</h1>
+        <button class="btn-primary">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i>
+            Добавить задачу
+        </button>
+    </header>
+
+    <div class="board">
+        <div class="column">
+            <div class="column-header">
+                <h2>К выполнению</h2>
+                <span class="column-badge">2</span>
+            </div>
+            <div class="column-body">
+                <div class="task-card">
+                    <div class="task-card-title">Настроить CI/CD пайплайн</div>
+                    <div class="task-card-desc">Настроить автоматическую сборку и деплой через GitHub Actions</div>
+                </div>
+                <div class="task-card">
+                    <div class="task-card-title">Обновить документацию API</div>
+                    <div class="task-card-desc">Добавить описание новых эндпоинтов в Swagger</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="column-header">
+                <h2>В работе</h2>
+                <span class="column-badge">3</span>
+            </div>
+            <div class="column-body">
+                <div class="task-card just-moved">
+                    <div class="task-card-title">Написать юнит-тесты</div>
+                </div>
+                <div class="task-card">
+                    <div class="task-card-title">Спроектировать базу данных</div>
+                    <div class="task-card-desc">Создать схему таблиц для хранения задач и колонок</div>
+                </div>
+                <div class="task-card">
+                    <div class="task-card-title">Реализовать REST API</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="column-header">
+                <h2>Готово</h2>
+                <span class="column-badge">1</span>
+            </div>
+            <div class="column-body">
+                <div class="task-card">
+                    <div class="task-card-title">Инициализировать проект</div>
+                    <div class="task-card-desc">Создать структуру проекта с Spring Boot и React</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

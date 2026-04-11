@@ -1,0 +1,16 @@
+server:
+  port: ${BACKEND_PORT:8080}
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  h2:
+    console:
+      enabled: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yml
