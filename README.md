@@ -1,6 +1,6 @@
 # Continue Example — Kanban Board
 
-A demo Kanban board (Java + React) built entirely through the [/continue framework](https://github.com/TODO-FRAMEWORK-REPO-LINK) — no code written by hand.
+A demo Kanban board (Java + React) built entirely through the [/continue framework](https://github.com/rakovi4/continue-framework) — no code written by hand.
 
 Three planned stories:
 
