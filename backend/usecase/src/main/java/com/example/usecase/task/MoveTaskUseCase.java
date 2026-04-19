@@ -11,6 +11,7 @@ public class MoveTaskUseCase {
     private final BoardStorage boardStorage;
 
     public void moveTask(MoveTaskRequest request) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        var board = boardStorage.getBoard();
+        board.moveTask(request.getTaskId(), request.getColumnId(), request.getPosition());
     }
 }
