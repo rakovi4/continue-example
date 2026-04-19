@@ -16,10 +16,10 @@
 - [x] adapters-discovery
 - [x] red-adapter rest
 - [x] green-adapter rest
-- [~] green-acceptance
+- [x] green-acceptance
 
 ### 1.2 Reject move to non-existent column
-- [ ] red-acceptance
+- [~] red-acceptance
 - [ ] design
 - [ ] red-usecase
 - [ ] green-usecase

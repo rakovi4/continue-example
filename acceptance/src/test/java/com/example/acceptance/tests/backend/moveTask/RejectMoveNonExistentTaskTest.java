@@ -2,7 +2,6 @@ package com.example.acceptance.tests.backend.moveTask;
 
 import com.example.acceptance.statements.MoveTaskStatements;
 import com.example.acceptance.tests.backend.AbstractBackendTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ public class RejectMoveNonExistentTaskTest extends AbstractBackendTest {
     @Autowired
     private MoveTaskStatements moveTaskStatements;
 
-    @Disabled("TDD Red Phase - PATCH /api/v1/tasks/{id} not implemented, expected 404 TASK_NOT_FOUND")
     @Test
     @DisplayName("""
             When the user moves a non-existent task to a column
