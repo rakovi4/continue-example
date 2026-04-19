@@ -3,7 +3,6 @@ package com.example.rest.controller.task;
 import com.example.domain.exception.TaskNotFoundException;
 import com.example.usecase.task.MoveTaskRequest;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,7 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled("TDD Red Phase - controller throws UnsupportedOperationException, TaskNotFoundException not handled by GlobalExceptionHandler")
 @DisplayName("1.1 Reject move of non-existent task")
 @WebMvcTest(TaskController.class)
 class TaskControllerRejectNonExistentTaskMoveTest extends AbstractTaskControllerTest {

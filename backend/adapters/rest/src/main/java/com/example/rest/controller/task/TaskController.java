@@ -35,6 +35,6 @@ public class TaskController {
     @PatchMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void moveTask(@PathVariable UUID id, @RequestBody MoveTaskRequestDto request) {
-        throw new UnsupportedOperationException();
+        moveTaskUseCase.moveTask(request.toUsecaseRequest(id));
     }
 }
