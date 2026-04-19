@@ -6,13 +6,15 @@ import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 import static com.example.acceptance.statements.AssertionHelpers.assertErrorResponse;
 
 @Service
 @RequiredArgsConstructor
 public class MoveTaskStatements {
 
-    private static final long NON_EXISTENT_TASK_ID = 99999L;
+    private static final String NON_EXISTENT_TASK_ID = UUID.randomUUID().toString();
     private static final long ANY_COLUMN_ID = 1L;
 
     private final ApplicationClient applicationClient;

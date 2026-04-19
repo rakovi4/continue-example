@@ -28,6 +28,14 @@ Then the move is rejected with a validation error
 And the error message indicates the position must be non-negative
 ```
 
+### 1.4 Reject invalid task ID format
+
+```gherkin
+When the user moves a task with an invalid ID format
+Then the move is rejected with a validation error
+And the error message indicates the task ID is invalid
+```
+
 ---
 
 ## 2. Move Task — Cross-Column
@@ -109,7 +117,8 @@ And To Do still contains "Task A", "Task B" in order
 | `a task exists in To Do` | POST /api/v1/tasks setup |
 | `tasks "X" and "Y" exist in To Do` | POST /api/v1/tasks for each (setup) |
 | `tasks "X" and "Y" exist in In Progress` | POST then PATCH to move (setup) |
-| `the user moves a non-existent task to a column` | PATCH /api/v1/tasks/99999 `{"column_id": N, "position": 0}` |
+| `the user moves a non-existent task to a column` | PATCH /api/v1/tasks/{random-uuid} `{"column_id": N, "position": 0}` |
+| `the user moves a task with an invalid ID format` | PATCH /api/v1/tasks/not-a-uuid `{"column_id": N, "position": 0}` |
 | `the user moves the task to a non-existent column` | PATCH /api/v1/tasks/{id} `{"column_id": 99999, "position": 0}` |
 | `the user moves the task to X at position N` | PATCH /api/v1/tasks/{id} `{"column_id": X_id, "position": N}` |
 | `the user moves "X" to Y at position N` | PATCH /api/v1/tasks/{X_id} `{"column_id": Y_id, "position": N}` |

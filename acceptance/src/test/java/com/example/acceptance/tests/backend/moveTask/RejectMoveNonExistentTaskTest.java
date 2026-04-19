@@ -13,7 +13,7 @@ public class RejectMoveNonExistentTaskTest extends AbstractBackendTest {
     @Autowired
     private MoveTaskStatements moveTaskStatements;
 
-    @Disabled("TDD Red Phase - error type expected TASK_NOT_FOUND but was Not Found")
+    @Disabled("TDD Red Phase - PATCH /api/v1/tasks/{id} not implemented, expected 404 TASK_NOT_FOUND")
     @Test
     @DisplayName("""
             When the user moves a non-existent task to a column

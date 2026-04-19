@@ -46,7 +46,7 @@ public class ApplicationClient {
         return new BoardResponse(columns);
     }
 
-    public Response moveTask(long taskId, MoveTaskRequest request) {
+    public Response moveTask(String taskId, MoveTaskRequest request) {
         return RestAssured
                 .given()
                 .baseUri(baseUrl)

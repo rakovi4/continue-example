@@ -32,6 +32,14 @@
 - [ ] adapters-discovery
 - [ ] green-acceptance
 
+### 1.4 Reject invalid task ID format
+- [ ] red-acceptance
+- [ ] design
+- [ ] red-usecase
+- [ ] green-usecase
+- [ ] adapters-discovery
+- [ ] green-acceptance
+
 ### 2.1 Move task before existing tasks in another column
 - [ ] red-acceptance
 - [ ] design
