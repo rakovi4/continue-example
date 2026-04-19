@@ -11,9 +11,9 @@
 ### 1.1 Reject move of non-existent task
 - [x] red-acceptance
 - [x] design
-- [~] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
+- [x] red-usecase
+- [x] green-usecase
+- [~] adapters-discovery
 - [ ] green-acceptance
 
 ### 1.2 Reject move to non-existent column
