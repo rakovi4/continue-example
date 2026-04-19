@@ -131,10 +131,10 @@
 - [S] green-frontend-api (no API call — form display is client-side only)
 - [x] align-design
 - [x] green-selenium
-- [~] demo
+- [x] demo
 
 ### 3.1 Submit task with title and description
-- [ ] red-selenium
+- [~] red-selenium
 - [ ] red-frontend
 - [ ] green-frontend
 - [ ] red-frontend-api
