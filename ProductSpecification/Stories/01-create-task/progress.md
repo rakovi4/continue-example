@@ -124,8 +124,8 @@
 - [x] demo
 
 ### 2.1 Display task creation form
-- [ ] red-selenium
-- [ ] red-frontend
+- [x] red-selenium
+- [~] red-frontend
 - [ ] green-frontend
 - [ ] red-frontend-api
 - [ ] green-frontend-api

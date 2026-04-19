@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BoardPageStatements {
+public class BoardPageStatements extends AbstractPageStatements {
 
     private static final By BOARD = By.cssSelector("[data-testid='board']");
     private static final By COLUMN = By.cssSelector("[data-testid='board-column']");
@@ -18,12 +18,8 @@ public class BoardPageStatements {
     private static final By ADD_TASK_BUTTON = By.cssSelector("[data-testid='add-task-button']");
     private static final By TASK_CARD = By.cssSelector("[data-testid='task-card']");
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     public BoardPageStatements(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+        super(driver, wait);
     }
 
     public void navigateToBoardPage(String appUrl) {
@@ -43,6 +39,11 @@ public class BoardPageStatements {
             String columnTitle = column.findElement(COLUMN_TITLE).getText();
             assertThat(tasks).as("column '%s' has no tasks", columnTitle).isEmpty();
         }
+    }
+
+    public void clickAddTaskButton() {
+        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_TASK_BUTTON));
+        addButton.click();
     }
 
     public void assertAddTaskButtonVisible() {
