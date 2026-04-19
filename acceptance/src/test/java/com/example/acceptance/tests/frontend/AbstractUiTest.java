@@ -1,5 +1,7 @@
 package com.example.acceptance.tests.frontend;
 
+import com.example.acceptance.statements.frontend.BoardPageStatements;
+import com.example.acceptance.statements.frontend.TaskCreationFormStatements;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -16,12 +18,16 @@ public abstract class AbstractUiTest {
     protected WebDriver webDriver;
     protected WebDriverWait wait;
     protected String appUrl;
+    protected BoardPageStatements boardPage;
+    protected TaskCreationFormStatements taskCreationForm;
 
     @BeforeEach
     void setUpWebDriver() {
         appUrl = resolveAppUrl();
         webDriver = createHeadlessChromeDriver();
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        boardPage = new BoardPageStatements(webDriver, wait);
+        taskCreationForm = new TaskCreationFormStatements(webDriver, wait);
     }
 
     private String resolveAppUrl() {

@@ -1,19 +1,10 @@
 package com.example.acceptance.tests.frontend.createTask;
 
-import com.example.acceptance.statements.frontend.BoardPageStatements;
 import com.example.acceptance.tests.frontend.AbstractUiTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DisplayEmptyBoardTest extends AbstractUiTest {
-
-    private BoardPageStatements boardPage;
-
-    @BeforeEach
-    void setUp() {
-        boardPage = new BoardPageStatements(webDriver, wait);
-    }
 
     @Test
     @DisplayName("""

@@ -1,23 +1,11 @@
 package com.example.acceptance.tests.frontend.createTask;
 
-import com.example.acceptance.statements.frontend.BoardPageStatements;
-import com.example.acceptance.statements.frontend.TaskCreationFormStatements;
 import com.example.acceptance.tests.frontend.AbstractUiTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DisplayTaskCreationFormTest extends AbstractUiTest {
-
-    private BoardPageStatements boardPage;
-    private TaskCreationFormStatements taskCreationForm;
-
-    @BeforeEach
-    void setUp() {
-        boardPage = new BoardPageStatements(webDriver, wait);
-        taskCreationForm = new TaskCreationFormStatements(webDriver, wait);
-    }
 
     @Disabled("TimeoutException: waiting for visibility of element located by [data-testid='task-creation-form']")
     @Test
