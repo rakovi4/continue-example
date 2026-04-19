@@ -10,8 +10,8 @@
 ## Backend
 ### 1.1 Reject move of non-existent task
 - [x] red-acceptance
-- [~] design
-- [ ] red-usecase
+- [x] design
+- [~] red-usecase
 - [ ] green-usecase
 - [ ] adapters-discovery
 - [ ] green-acceptance
