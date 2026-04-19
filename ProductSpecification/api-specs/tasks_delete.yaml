@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Delete Task
+  version: 1.0.0
+
+paths:
+  /api/v1/tasks/{id}:
+    delete:
+      summary: Delete a task permanently
+      operationId: deleteTask
+      tags:
+        - tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Task deleted successfully
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "TASK_NOT_FOUND"
+        message:
+          type: string
+          example: "Task not found"
+        timestamp:
+          type: string
+          format: date-time
