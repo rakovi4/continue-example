@@ -1,18 +1,12 @@
 package com.example.rest.controller.task;
 
 import com.example.domain.exception.ValidationException;
-import com.example.rest.RestTest;
 import com.example.usecase.task.CreateTaskRequest;
-import com.example.usecase.task.CreateTaskUseCase;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
@@ -22,13 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @DisplayName("2.3 Reject description exceeding 5000 characters")
 @WebMvcTest(TaskController.class)
-class TaskControllerRejectLongDescriptionTest implements RestTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private CreateTaskUseCase createTaskUseCase;
+class TaskControllerRejectLongDescriptionTest extends AbstractTaskControllerTest {
 
     @Test
     @SneakyThrows

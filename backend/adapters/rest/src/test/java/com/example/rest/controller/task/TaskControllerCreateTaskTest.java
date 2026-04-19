@@ -3,17 +3,12 @@ package com.example.rest.controller.task;
 import com.example.domain.task.Description;
 import com.example.domain.task.Task;
 import com.example.domain.task.Title;
-import com.example.rest.RestTest;
 import com.example.usecase.task.CreateTaskRequest;
-import com.example.usecase.task.CreateTaskUseCase;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -26,16 +21,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @DisplayName("3.1 Create task with title only")
 @WebMvcTest(TaskController.class)
-class TaskControllerCreateTaskTest implements RestTest {
+class TaskControllerCreateTaskTest extends AbstractTaskControllerTest {
 
     private static final UUID TASK_ID = UUID.fromString("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
     private static final Instant CREATED_AT = Instant.parse("2026-04-15T10:00:00Z");
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private CreateTaskUseCase createTaskUseCase;
 
     @Test
     @SneakyThrows
