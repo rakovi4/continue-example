@@ -118,7 +118,31 @@
 - Primary: `--accent` bg, white text, 6px radius, 40px height, 16px horizontal padding
 - Primary hover: `--accent-hover`
 - Secondary/Cancel: transparent bg, `--text-secondary` text, border
+- Danger: `--danger` bg, white text, 6px radius, 40px height (desktop), 44px (mobile)
+- Danger hover: `#e03131`
 - Disabled: 50% opacity, no pointer events
+
+### Icon Buttons (Card Actions)
+
+- Delete button: `trash-2` icon, `--text-placeholder` color by default
+- Hover: `--danger` color, `--danger-bg` background, 4px radius
+- Positioned in card header, flex-shrink: 0
+- Mobile: min touch target 44x44px with 8px padding
+
+### Confirmation Dialog
+
+- Desktop: centered modal, 400px width, 12px radius, modal shadow
+- Mobile: bottom sheet (anchored to bottom), full width, 12px top radius
+- Warning icon: `alert-triangle` in circular `--danger-bg` container (48px)
+- Title: 18px/600, centered
+- Body text: 14px/400, `--text-secondary`, centered, includes task name in bold
+- Actions: desktop = side-by-side (Cancel + Danger), mobile = stacked (Danger first, Cancel second)
+- Overlay: `rgba(0,0,0,0.5)` backdrop
+
+### Highlighted Card
+
+- Active/targeted card: 2px solid `--danger` outline, -2px offset
+- Used during destructive action confirmation to indicate which card is affected
 
 ### Empty State
 

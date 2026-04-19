@@ -3,6 +3,6 @@
 ## Spec
 - [x] interview
 - [x] story
-- [~] mockups
-- [ ] api-spec
+- [x] mockups
+- [~] api-spec
 - [ ] test-spec
