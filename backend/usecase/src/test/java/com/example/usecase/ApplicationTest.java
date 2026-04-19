@@ -6,8 +6,10 @@ import com.example.domain.board.ColumnType;
 import com.example.usecase.board.GetBoardUseCase;
 import com.example.usecase.fake.board.FakeBoardStorage;
 import com.example.usecase.statements.BoardStatements;
+import com.example.usecase.statements.MoveTaskStatements;
 import com.example.usecase.statements.TaskStatements;
 import com.example.usecase.task.CreateTaskUseCase;
+import com.example.usecase.task.MoveTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
@@ -20,10 +22,12 @@ public class ApplicationTest {
     // ==================== USECASES ====================
     protected GetBoardUseCase getBoardUseCase;
     protected CreateTaskUseCase createTaskUseCase;
+    protected MoveTaskUseCase moveTaskUseCase;
 
     // ==================== TEST STATEMENTS ====================
     protected BoardStatements boardStatements;
     protected TaskStatements taskStatements;
+    protected MoveTaskStatements moveTaskStatements;
 
     @BeforeEach
     void setUp() {
@@ -44,10 +48,12 @@ public class ApplicationTest {
     private void initUseCases() {
         getBoardUseCase = new GetBoardUseCase(fakeBoardStorage);
         createTaskUseCase = new CreateTaskUseCase(fakeBoardStorage);
+        moveTaskUseCase = new MoveTaskUseCase(fakeBoardStorage);
     }
 
     private void initStatements() {
         boardStatements = new BoardStatements(getBoardUseCase);
         taskStatements = new TaskStatements(createTaskUseCase);
+        moveTaskStatements = new MoveTaskStatements(moveTaskUseCase);
     }
 }
