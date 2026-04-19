@@ -125,13 +125,13 @@
 
 ### 2.1 Display task creation form
 - [x] red-selenium
-- [~] red-frontend
-- [ ] green-frontend
-- [ ] red-frontend-api
-- [ ] green-frontend-api
-- [ ] align-design
-- [ ] green-selenium
-- [ ] demo
+- [S] red-frontend (trivial: form visibility is component-level state toggle, no logic/branching)
+- [S] green-frontend (trivial: no logic to implement)
+- [S] red-frontend-api (no API call — form display is client-side only, submission is scenario 3.1)
+- [S] green-frontend-api (no API call — form display is client-side only)
+- [x] align-design
+- [x] green-selenium
+- [~] demo
 
 ### 3.1 Submit task with title and description
 - [ ] red-selenium

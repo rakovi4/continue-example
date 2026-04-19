@@ -17,7 +17,7 @@ export function TaskCreationForm({ onClose }: TaskCreationFormProps) {
           data-testid="task-title-input"
           type="text"
           className="form-input"
-          placeholder="Введите название задачи"
+          placeholder="Название задачи"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -26,7 +26,7 @@ export function TaskCreationForm({ onClose }: TaskCreationFormProps) {
         <textarea
           data-testid="task-description-input"
           className="form-textarea"
-          placeholder="Добавьте описание (необязательно)"
+          placeholder="Описание задачи"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
