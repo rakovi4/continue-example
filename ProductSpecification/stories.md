@@ -11,7 +11,8 @@
 
 | #  | Story                         | Spec | Back | Intg | Front | Sec | Load | Infra | Tests | %       |
 |----|-------------------------------|------|------|------|-----|-------|------|-------|---------|---------|
-| 03 | Edit / Delete Task            | ·    | ·    | ·    | ·   | ·     | ·    | ·     |       |         |
+| 03 | Delete Task                   | ·    | ·    | ·    | ·   | ·     | ·    | ·     |       |         |
+| 04 | Edit Task                     | ·    | ·    | ·    | ·   | ·     | ·    | ·     |       |         |
 # Done
 
 | #  | Story                         | Spec | Back | Intg | Front | Sec | Load | Infra | Tests | %       |
