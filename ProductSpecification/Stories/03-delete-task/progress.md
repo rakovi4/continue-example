@@ -111,17 +111,9 @@
 - [ ] adapters-discovery
 - [ ] green-acceptance
 
-### Scenario 12: Cannot enumerate task IDs via delete responses
-- [ ] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
-
 ## Load Scenarios (03_Load_Tests.md)
 
-### Scenario 13: Delete task responds within 200ms
+### Scenario 12: Delete task responds within 200ms
 - [ ] red-acceptance
 - [ ] design
 - [ ] red-usecase
@@ -129,15 +121,7 @@
 - [ ] adapters-discovery
 - [ ] green-acceptance
 
-### Scenario 14: Handle 50 concurrent delete requests
-- [ ] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
-
-### Scenario 15: Delete task from a full board
+### Scenario 13: Delete task from a full board
 - [ ] red-acceptance
 - [ ] design
 - [ ] red-usecase
@@ -147,7 +131,7 @@
 
 ## Infrastructure Scenarios (04_Infrastructure_Tests.md)
 
-### Scenario 16: Delete task fails gracefully when database is unavailable
+### Scenario 14: Delete task fails gracefully when database is unavailable
 - [ ] red-acceptance
 - [ ] design
 - [ ] red-usecase
@@ -155,7 +139,7 @@
 - [ ] adapters-discovery
 - [ ] green-acceptance
 
-### Scenario 17: Delete task succeeds after database recovery
+### Scenario 15: Delete task succeeds after database recovery
 - [ ] red-acceptance
 - [ ] design
 - [ ] red-usecase

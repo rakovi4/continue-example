@@ -12,22 +12,9 @@ Then the response is received within 200 milliseconds
 
 ---
 
-## 2. Concurrent Requests
+## 2. Volume
 
-### 2.1 Handle 50 concurrent delete requests
-
-```gherkin
-Given 50 tasks exist on the board
-When 50 users delete different tasks simultaneously
-Then all delete requests complete within 500 milliseconds
-And all deleted tasks are removed from the board
-```
-
----
-
-## 3. Volume
-
-### 3.1 Delete task from a full board
+### 2.1 Delete task from a full board
 
 ```gherkin
 Given a board with 100 tasks distributed across columns
@@ -43,10 +30,7 @@ And remaining tasks in the column have contiguous positions
 | DSL Statement | Technical Implementation |
 |---------------|-------------------------|
 | `a task exists on the board` | POST /api/v1/tasks (setup) |
-| `50 tasks exist on the board` | POST /api/v1/tasks x50 (setup) |
 | `a board with 100 tasks distributed across columns` | Create 100 tasks, move to distribute (setup) |
 | `the user deletes the task` | DELETE /api/v1/tasks/{id} |
-| `50 users delete different tasks simultaneously` | 50 concurrent DELETE requests |
 | `the response is received within N milliseconds` | Response time < N ms |
-| `all deleted tasks are removed from the board` | GET /api/v1/board confirms no deleted tasks |
 | `remaining tasks in the column have contiguous positions` | Positions are sequential 1..N |

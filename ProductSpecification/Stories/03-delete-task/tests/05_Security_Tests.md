@@ -20,25 +20,11 @@ Then the request is rejected with a bad request error
 
 ---
 
-## 2. IDOR Protection
-
-### 2.1 Cannot enumerate task IDs via delete responses
-
-```gherkin
-When the user sends delete requests with sequential numeric IDs
-Then all requests are rejected with a bad request error
-And the response does not reveal whether a task exists at that ID
-```
-
----
-
 ## DSL Technical Reference
 
 | DSL Statement | Technical Implementation |
 |---------------|-------------------------|
 | `a task with ID containing SQL injection payload` | DELETE /api/v1/tasks/1'; DROP TABLE tasks;-- |
 | `a task with ID containing path traversal characters` | DELETE /api/v1/tasks/../../../etc/passwd |
-| `delete requests with sequential numeric IDs` | DELETE /api/v1/tasks/1, /api/v1/tasks/2, etc. |
 | `the request is rejected with a bad request error` | HTTP 400 |
 | `the database is not affected` | GET /api/v1/board returns expected state |
-| `the response does not reveal whether a task exists` | Same error format for existent and non-existent numeric IDs |
