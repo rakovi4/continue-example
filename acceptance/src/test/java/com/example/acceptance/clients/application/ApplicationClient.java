@@ -4,6 +4,7 @@ import com.example.acceptance.clients.application.dto.ErrorResponse;
 import com.example.acceptance.clients.application.dto.board.BoardResponse;
 import com.example.acceptance.clients.application.dto.board.ColumnResponse;
 import com.example.acceptance.clients.application.dto.task.CreateTaskRequest;
+import com.example.acceptance.clients.application.dto.task.MoveTaskRequest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -43,6 +44,19 @@ public class ApplicationClient {
 
         List<ColumnResponse> columns = response.jsonPath().getList("columns", ColumnResponse.class);
         return new BoardResponse(columns);
+    }
+
+    public Response moveTask(long taskId, MoveTaskRequest request) {
+        return RestAssured
+                .given()
+                .baseUri(baseUrl)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .patch("/api/v1/tasks/" + taskId)
+                .then()
+                .extract()
+                .response();
     }
 
     public Response createTask(CreateTaskRequest request) {

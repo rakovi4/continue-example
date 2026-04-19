@@ -1,13 +1,13 @@
 package com.example.acceptance.statements;
 
 import com.example.acceptance.clients.application.ApplicationClient;
-import com.example.acceptance.clients.application.dto.ErrorResponse;
 import com.example.acceptance.clients.application.dto.task.CreateTaskRequest;
 import com.example.acceptance.clients.application.dto.task.TaskResponse;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.example.acceptance.statements.AssertionHelpers.assertErrorResponse;
 import static com.example.acceptance.statements.AssertionHelpers.assertTimestampRecent;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,7 +53,7 @@ public class TaskStatements {
     }
 
     private void assertTaskCreated(String expectedTitle, String expectedDescription) {
-        assertHttpStatus(201);
+        assertThat(lastResponse.statusCode()).as("HTTP status").isEqualTo(201);
         TaskResponse task = lastResponse.as(TaskResponse.class);
         assertThat(task.getId()).as("task id").isNotNull();
         assertThat(task.getTitle()).as("task title").isEqualTo(expectedTitle);
@@ -63,29 +63,16 @@ public class TaskStatements {
     }
 
     public String assertTaskCreatedSuccessfully() {
-        assertHttpStatus(201);
+        assertThat(lastResponse.statusCode()).as("HTTP status").isEqualTo(201);
         return lastResponse.as(TaskResponse.class).getId();
     }
 
     public void assertDuplicateTitleError() {
-        assertErrorResponse("DUPLICATE_TITLE", "A task with this title already exists");
+        assertErrorResponse(lastResponse, 400, "DUPLICATE_TITLE", "A task with this title already exists");
     }
 
     public void assertValidationError(String expectedMessage) {
-        assertErrorResponse("VALIDATION_ERROR", expectedMessage);
-    }
-
-    private void assertErrorResponse(String expectedError, String expectedMessage) {
-        assertHttpStatus(400);
-        ErrorResponse error = lastResponse.as(ErrorResponse.class);
-
-        assertThat(error.getError()).as("error type").isEqualTo(expectedError);
-        assertThat(error.getMessage()).as("error message").isEqualTo(expectedMessage);
-        assertTimestampRecent(error.getTimestamp(), "error timestamp");
-    }
-
-    private void assertHttpStatus(int expectedStatus) {
-        assertThat(lastResponse.statusCode()).as("HTTP status").isEqualTo(expectedStatus);
+        assertErrorResponse(lastResponse, 400, "VALIDATION_ERROR", expectedMessage);
     }
 
 }
