@@ -27,6 +27,37 @@ Use templates from `ProductSpecification/ui/templates/` as structural starting p
 
 **Copy the template's layout and sidebar verbatim. Customize only the main content area.**
 
+## Shared Web Components (REQUIRED)
+
+Any UI element repeated across 2+ stories MUST use a shared web component from `ProductSpecification/ui/components/`. Never inline HTML that a component already provides — Shadow DOM guarantees consistency.
+
+**Before writing any structural HTML, check `ui/components/` for an existing component.** If none exists and the element will appear in multiple stories, create one.
+
+Component naming convention: use a single project-wide prefix (e.g., `<app-sidebar>`, `<app-header>`, `<app-dashboard-stats>`). Decide the prefix once for the project and apply it consistently to every shared component.
+
+Typical components to extract (the exact set depends on the project):
+
+| Element | Example component | Example attributes |
+|---------|------------------|--------------------|
+| Desktop sidebar | `<app-sidebar>` | `active` |
+| Mobile header | `<app-header>` | `title` |
+| Mobile bottom nav | `<app-bottom-nav>` | `active` |
+| Stat cards | `<app-dashboard-stats>` | `layout`, plus one attribute per stat |
+| Dashboard table | `<app-dashboard-table>` | `layout`, `title`, `count`, `link-text`, `rows` (JSON) |
+| Page table (with actions) | `<app-page-table>` | `layout`, `actions`, `create-button`, `filter-tabs`, `active-tab`, `rows` |
+| Empty state | `<app-empty-state>` | `icon`, `title`, `description`, `button-text`, `button-icon` |
+
+**Script import path** (from `stories/NN/mockups/desktop/`):
+```html
+<script src="../../../../ui/components/app-dashboard-stats.js"></script>
+```
+
+**Rules:**
+- Always show all 4 stat cards. Use `0` for unavailable values, descriptive sub-text for context.
+- Read each component's doc comment (top of `.js` file) for the full attribute API.
+- Never duplicate component CSS inline — it will drift.
+- After generating mockups, if a new structural pattern appears in 2+ places, extract it into a new component and backport to existing stories.
+
 ## Format
 
 - Standalone HTML with embedded CSS. External dependencies: Google Fonts (Inter), Lucide icons CDN.

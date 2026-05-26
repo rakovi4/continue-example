@@ -6,7 +6,7 @@ C#/FluentAssertions code examples for persistence adapter test anti-patterns. Fo
 
 1. **Use `.Because("reason")`** -- always describe what you're validating with FluentAssertions' `.Because()` for clear failure messages
 2. **Prefer `BeEquivalentTo`** -- replace 2+ sequential per-property `.Should().Be()` calls with `actual.Should().BeEquivalentTo(expected)`
-3. **Truncate timestamps** -- for `DateTimeOffset`/`DateTime` comparisons, truncate to minutes to avoid millisecond mismatches from database round-trips
+3. **Use BeCloseTo for timestamps** -- for `DateTimeOffset`/`DateTime` comparisons use `.Should().BeCloseTo(expected, TimeSpan.FromMinutes(1))`. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 
 ## Anti-Pattern Examples
 
@@ -14,6 +14,6 @@ Persistence adapter tests share many patterns with usecase and acceptance tests.
 
 - **Loose existence checks** on returned entities -- use `.Should().Be(expected)` not `.Should().NotBeNull()`
 - **Missing field assertions** on `ToDomain()` results -- assert ALL domain fields after round-trip
-- **Timestamp precision mismatches** -- always truncate to minutes before comparing
+- **Timestamp precision mismatches** -- use `BeCloseTo(expected, TimeSpan.FromMinutes(1))`, never truncate
 
 See `test-review-usecase.md` for Statements purity patterns and `test-review-acceptance.md` for assertion strictness patterns -- both apply to H2 adapter tests.

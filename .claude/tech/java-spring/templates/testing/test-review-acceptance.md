@@ -7,7 +7,7 @@ Java/AssertJ code examples for acceptance test anti-patterns. For universal rule
 1. **Use .as()** -- always describe what you're validating with AssertJ's `.as()` for clear failure messages
 2. **Extract validation helper classes** -- parsing logic (e.g., `SetCookie` parser) belongs in helper classes
 3. **Prefer usingRecursiveComparison** -- replace 2+ sequential per-field `assertThat` calls with `assertThat(actual).usingRecursiveComparison().isEqualTo(expected)`
-4. **Use truncatedTo(ChronoUnit.MINUTES)** -- for Instant/LocalDateTime comparisons to avoid millisecond mismatches
+4. **Use isCloseTo for timestamps** -- for Instant/LocalDateTime comparisons use `isCloseTo(expected, within(1, ChronoUnit.MINUTES))`. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 
 ## Anti-Pattern Examples
 
@@ -202,13 +202,13 @@ assertThat(cookie.getMaxAge())
 
 ### GOOD: Timestamp Assertions with Precision
 ```java
-assertThat(response.createdAt().truncatedTo(ChronoUnit.MINUTES))
+assertThat(response.createdAt())
     .as("created at timestamp")
-    .isEqualTo(Instant.now().truncatedTo(ChronoUnit.MINUTES));
+    .isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
 
-assertThat(response.expiresAt().truncatedTo(ChronoUnit.MINUTES))
+assertThat(response.expiresAt())
     .as("expiration date")
-    .isEqualTo(Instant.now().plus(30, ChronoUnit.DAYS).truncatedTo(ChronoUnit.MINUTES));
+    .isCloseTo(Instant.now().plus(30, ChronoUnit.DAYS), within(1, ChronoUnit.MINUTES));
 ```
 
 ### GOOD: Collection Assertions with Expected Constants
@@ -227,7 +227,7 @@ public void assertTaskExists(GetTaskStatusResponse response) {
     assertThat(response.title()).as("title").isEqualTo(EXPECTED_TITLE);
     assertThat(response.description()).as("description").isEqualTo(EXPECTED_DESCRIPTION);
     assertThat(response.columnId()).as("column ID").isEqualTo(EXPECTED_COLUMN_ID);
-    assertThat(response.createdAt().truncatedTo(MINUTES)).as("created at").isEqualTo(Instant.now().truncatedTo(MINUTES));
+    assertThat(response.createdAt()).as("created at").isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
     assertThat(response.status()).as("status").isEqualTo(EXPECTED_STATUS);
 }
 ```
@@ -256,6 +256,6 @@ assertThat(list).usingRecursiveFieldByFieldElementComparator()
 | `assertThat(n).isBetween(a, b)` | `assertThat(n).isEqualTo(exact)` (if deterministic) |
 | `assertThat(list).contains(item)` | `assertThat(list).isEqualTo(EXPECTED_LIST)` |
 | `assertThat(permissions).isEqualTo(List.of())` | `assertThat(permissions).isEqualTo(EXPECTED_PERMISSIONS)` |
-| `assertThat(timestamp).isNotNull()` | `assertThat(timestamp.truncatedTo(MINUTES)).isEqualTo(expected)` |
+| `assertThat(timestamp).isNotNull()` | `assertThat(timestamp).isCloseTo(expected, within(1, MINUTES))` |
 | `assertThat(expiresAt).isAfter(createdAt)` | `assertThat(DAYS.between(startedAt, expiresAt)).isEqualTo(30)` |
 | 2+ sequential `assertThat(field).isEqualTo(expected)` | `assertThat(actual).usingRecursiveComparison().isEqualTo(expected)` |

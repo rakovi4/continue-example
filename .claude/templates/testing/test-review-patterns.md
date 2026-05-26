@@ -4,6 +4,10 @@ Reference material for the test-review agent: anti-patterns, assertion rules, an
 
 Tech-specific code examples (BAD/GOOD with language syntax) are in `.claude/tech/{backend}/templates/testing/test-review-patterns.md`.
 
+## Scope of Assertion Checks
+
+Assertion-related anti-patterns (#6–20, #27, #30, #32, #33) apply to **every site that contains an assertion**: test classes, Statements, AND `verify*`/`assert*` methods on `Fake*` test doubles. A loose assertion hidden in a Fake's `verifyXEmailSent(...)` method is still a loose assertion — the Fake is test infrastructure under the same strict-assertion contract as Statements.
+
 ## Anti-Pattern Catalog
 
 Each entry names a smell the reviewer must detect. Tech templates provide BAD/GOOD code examples for each.
@@ -31,7 +35,7 @@ Each entry names a smell the reviewer must detect. Tech templates provide BAD/GO
 21. **Wildcard/any in mock when exact value is known** -- mock accepts any argument instead of matching the exact expected value.
 22. **Any assertion in test class** -- even a single assertion call is non-DSL code in the test class; all assertions belong in Statements.
 23. **Action + assertion combined in one Statements method** -- method calls usecase AND asserts, combining When + Then. Split into action (stores result) + assertion (verifies it).
-24. **Storage port injected in Statements** -- Statements reads/writes storage directly instead of going through usecases. Only external-service Fakes are OK.
+24. **Storage port injected in Statements** -- Statements reads/writes storage directly instead of going through usecases — both for setup (`given*` populating Fake storage) and assertions (`assert*` querying storage). Only external-service Fakes (email, API clients) are OK for configuration. NO EXCEPTIONS for read-only, count-only, or aggregation ports — if the real implementation reads from the database, it is a storage port. Do not accept "analogous to external-service Fake" rationalization.
 25. **Duplicating assertion logic from another Statements class** -- repeats assertions that already exist in another Statements instead of delegating.
 26. **Cross-Statements data passing in test class** -- test builds/fetches data from one Statements and passes to another instead of using compound methods.
 27. **Decomposed call when compound method exists** -- uses decomposed calls when an existing compound method already wraps them.
@@ -51,14 +55,14 @@ Each entry names a smell the reviewer must detect. Tech templates provide BAD/GO
 5. **No existence-only checks** -- replace with exact equality when expected value is deterministic
 6. **No empty collections** -- if a field should have values, assert the actual expected values
 7. **Exact collection match** -- use exact list equality, not element containment
-8. **Timestamp precision** -- truncate to minutes for now-based comparisons
+8. **Timestamp precision** -- use `isCloseTo(expected, within(1, ChronoUnit.MINUTES))` for now-based comparisons. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 9. **Define expected constants** -- create named constants for all expected values
 10. **Use exact mock matching** -- verify with exact argument matching, not wildcards
 11. **No infrastructure in test classes** -- test classes must NEVER call mocks, clients, or adapters directly
 12. **No assertions in test class** -- ALL assertion calls must live in Statements methods
 13. **No calculations in expected values** -- tests must be dumb, assert predefined constants
 14. **Minimize loops and conditionals in Statements** -- acceptable for bulk data, unacceptable for computing expected values
-15. **No storage ports in Statements** -- use usecases to verify state, not storage queries
+15. **No storage ports in Statements** -- not for assertions, not for setup. Set up data through usecases; verify state through usecases. Only external-service Fakes (email, API clients) are OK for configuration. Read-only, count-only, and aggregation ports are still storage ports -- no reclassification
 16. **Separate action from assertion** -- a Statements method must not call usecase AND assert in the same body
 17. **No setup steps in test DSL** -- merge setup into compound given-phase method
 18. **No cross-Statements data passing** -- extract compound methods instead
@@ -88,7 +92,7 @@ Each entry names a smell the reviewer must detect. Tech templates provide BAD/GO
 | Greater-than/range check | Assert exact value (if deterministic) |
 | Collection containment | Assert exact expected list |
 | Empty collection | Assert actual expected collection |
-| Timestamp existence check | Truncate to minutes, assert equality |
+| Timestamp existence check | `isCloseTo(expected, within(1, MINUTES))` |
 | Relative timestamp comparison | Compute exact period and assert |
 | Partial field check (3 of 6) | Check ALL fields of the response |
 | Wildcard/any in mock setup | Exact argument matching |
@@ -104,7 +108,7 @@ Each entry names a smell the reviewer must detect. Tech templates provide BAD/GO
 | Selenium: direct URL navigation | Navigate via UI click |
 | Not-implemented marker in Statements | Write real implementation with locators, waits, assertions |
 | Action + assertion in one method | Split: action method (stores result) + assertion method |
-| Storage port in Statements | Replace with usecase query |
+| Storage port in Statements (setup or assertion) | Setup: call usecases to create underlying data (goods, tasks, etc.) so the count/aggregation derives naturally. Assert: call usecase to query state. Never pre-seed a Fake storage directly -- even for read-only/count ports |
 | Middleman Statements delegation | Test injects Statements directly |
 | Private function/type in test class | Move to Statements |
 | Domain class/field not referenced by test | Remove -- RED creates only current test's slice |

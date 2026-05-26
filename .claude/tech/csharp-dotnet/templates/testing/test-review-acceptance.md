@@ -7,7 +7,7 @@ C#/FluentAssertions code examples for acceptance test anti-patterns. For univers
 1. **Use `.Because("reason")`** -- always describe what you're validating with FluentAssertions' `.Because()` for clear failure messages
 2. **Extract validation helper classes** -- parsing logic (e.g., `SetCookieParser`) belongs in helper classes
 3. **Prefer `BeEquivalentTo`** -- replace 2+ sequential per-property `.Should().Be()` calls with `actual.Should().BeEquivalentTo(expected)`
-4. **Truncate timestamps** -- for `DateTimeOffset`/`DateTime` comparisons, truncate to minutes to avoid millisecond mismatches
+4. **Use BeCloseTo for timestamps** -- for `DateTimeOffset`/`DateTime` comparisons use `.Should().BeCloseTo(expected, TimeSpan.FromMinutes(1))`. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 
 ## Anti-Pattern Examples
 

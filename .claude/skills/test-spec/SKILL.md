@@ -18,7 +18,7 @@ Generate BDD-style test specifications for a story in 6 categories. Each categor
 
 ### Phase 1: Context & Story Selection
 
-Read before generating: `ProductSpecification/BriefProductDescription.txt`, `ProductSpecification/stories.md`, `ProductSpecification/ExpectedLoad.txt`, story folder (`stories/*/`): mockups, `*.md`, `endpoints.md`, `interview.md`.
+Read before generating: `ProductSpecification/BriefProductDescription.md`, `ProductSpecification/stories.md`, `ProductSpecification/ExpectedLoad.md`, story folder (`stories/*/`): mockups, `*.md`, `endpoints.md`, `interview.md`.
 
 Parse input: by name (`"Login/Logout"`), by number (`5`), or interactive (list and ask).
 
@@ -26,7 +26,7 @@ If `interview.md` exists, extract:
 - Business rules and constraints → map to API test scenarios
 - Explicit edge cases (column transitions, task ordering, concurrent edits) → map to extended tests
 - External API error modes → map to integration tests
-- Rate limits and performance constraints → map to load tests
+- Rate limits and performance constraints → map to load tests when they exercise the project's declared **Load Challenge Profile** (read `ExpectedLoad.md` to identify it); skip constraints that don't match the project's profile
 
 **Prerequisite analysis** (mandatory): Read the story's Prerequisites section and Validation Rules table. For each prerequisite (Board exists, Column exists, etc.), generate guard scenarios in BOTH API and UI tests following the Prerequisite Guard Checklist in `test-spec-format.md`. Cross-reference existing stories (e.g., Story 5 `tests/01_API_Tests.md` sections 0-1, `tests/02_UI_Tests.md` section 0) for established blocker patterns.
 
@@ -56,5 +56,5 @@ Report: folder path, files created, test counts per file.
 
 - English, Gherkin in Markdown, DSL only (no technical details in steps)
 - Main files: critical path (~27-34 total), Extended files: edge cases
-- Reference ExpectedLoad.txt for load tests
+- **Load tests**: profile-driven. Read the **Load Challenge Profile** section in `ExpectedLoad.md` to identify this project's dominant load risk (Volume / Throughput / Latency / Big-data). Generate 1-3 scenarios per story that exercise the declared profile, using the matching assertion class and out-of-scope list from the catalog in `test-spec-format.md`. Skip the file entirely (set `Load = n/a`) for stories with no operation exercising the project's profile — one-shot per-user actions bounded by user count are the common case (login, registration, password reset, link API key)
 - **Security**: generate stack-aware scenarios only — see relevance filtering and checklist in `test-spec-format.md`. Skip technologies not in the stack (NoSQL, LDAP, XXE). Skip cross-cutting concerns tested globally (security headers, CORS, HTTPS). Include IDOR for resource-by-ID endpoints (`tasks/{id}`, `boards/{id}`), JWT security for auth stories, input validation for task fields. Merge related scenarios (e.g., one SQL injection test covering all fields). Target 6-10 focused scenarios per story.

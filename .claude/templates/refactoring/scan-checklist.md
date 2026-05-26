@@ -12,7 +12,7 @@ Produce structural data. Violation is numeric/objective.
 
 | # | Check | Enumerate | Violation |
 |---|-------|-----------|-----------|
-| A0 | Class size & concerns | Total source lines (excluding imports/package), implemented interfaces/ports, distinct method groups (methods that don't call each other and serve different concerns) | >200 lines OR 2+ unrelated interfaces |
+| A0 | File / class size & concerns | Total source lines (excluding imports/package), implemented interfaces/ports, distinct method groups (methods that don't call each other and serve different concerns). **Applies to every file type — for files with no classes (stylesheets, config, plain modules) count all lines.** | >200 lines OR 2+ unrelated interfaces |
 
 **Complexity:**
 
@@ -87,6 +87,7 @@ Produce structural data. Violation is numeric/objective.
 | # | Check | Enumerate | Violation |
 |---|-------|-----------|-----------|
 | A35 | Sequential storage port queries | Count injected storage/repository port fields. For each, check if data from one port feeds queries to another (N+1 pattern: fetch list → per item: fetch related data from another port). | 2+ storage ports queried sequentially — enrich aggregate, single port fetches everything upfront |
+| A56 | Usecase-to-usecase dependency | List every injected field on the usecase. For each, classify its type: domain type, port interface, request DTO, clock/time source, other usecase. A type is "other usecase" if it lives under the usecase layer directory, is a concrete implementation (not a port interface), and itself orchestrates a user-visible operation. | Any other-usecase dependency → extract shared logic into the domain (entity method, value-object behavior, stateless domain service) or a non-usecase helper at the usecase layer; delete the usecase dependency |
 
 **Storage adapter design** (skip if not a storage adapter class):
 
@@ -252,6 +253,8 @@ All templates live in `.claude/templates/refactoring/`.
 | Hardcoded values in test helpers | Parameterize Helper | `parameterize-helper.md` |
 | Test passes data create->assert | Inline into Statement | `inline-test-params.md` |
 | Untyped map/dict as API request body | Replace Map with Typed DTO | `replace-map-with-dto.md` |
+| Untyped JSON-tree navigation when parsing a payload (`getNode("field").asText()`, `path(...)` chains) | Replace JsonNode traversal with Typed DTO + typed deserialization | `replace-jsonnode-with-dto.md` |
+| Manual text re-parsing of a structured body (splitting on `:`, regex over emitted format, line-by-line key extraction) | Replace JsonNode traversal with Typed DTO + typed deserialization | `replace-jsonnode-with-dto.md` |
 | Controller returns raw usecase object | Wrap in REST DTO | `rest-response-dto.md` |
 | Qualified enum references in logic | Import enum values to avoid qualified references (see tech binding) | `simplify-expressions.md` |
 | Nested conditionals with early return | Flatten to if/return chain | `flatten-control-flow.md` |
@@ -265,6 +268,7 @@ All templates live in `.claude/templates/refactoring/`.
 | Storage manually groups/assembles rows (grouping, intermediate DTOs) | Delegate mapping to ORM -- use proper entity relationships | `subselect-read-model.md` |
 | Storage injects multiple repositories | Consolidate into single query | `subselect-read-model.md` |
 | Usecase injects 2+ storage ports queried sequentially | Enrich aggregate, single storage port fetches everything upfront | `subselect-read-model.md` |
+| Usecase injects or calls another usecase | Extract shared logic into the domain (entity method, value-object behavior, stateless domain service) or a non-usecase helper at the usecase layer; delete the usecase dependency | `move-to-data.md` |
 | Static utility class builds query criteria from query object | Move to adapter query class extending port query | `adapter-query.md` |
 | Untyped array / tuple query results with index-based access | Extract typed projection class with `toDomain()` | `adapter-query.md` |
 | Storage method has inline query building + criteria + result mapping | Extract AdapterQuery that owns `filters()`, `pageRequest()`, `summary()` | `adapter-query.md` |

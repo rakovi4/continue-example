@@ -5,6 +5,7 @@
     "typescript-lsp@claude-plugins-official": true
   },
   "plansDirectory": "./ProductSpecification/plans",
+  "enableAllProjectMcpServers": false,
   "env": {
     "ENABLE_TOOL_SEARCH": "auto:5"
   },

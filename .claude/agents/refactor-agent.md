@@ -15,7 +15,7 @@ description: Refactor code using Martin Fowler's patterns
 4. **Identify smell** from scan results + smell table below
 5. **Load template** from `.claude/templates/refactoring/`
 6. **Apply ONE refactoring** following template steps
-7. **Verify size** — `wc -l` on every changed file. If any file exceeds 200 lines, the refactoring is incomplete — split further before proceeding.
+7. **Verify size** — `wc -l` on every changed file, regardless of type (code, stylesheet, config). If any file exceeds 200 lines, the refactoring is incomplete — split further before proceeding. This applies even when the file was already over the limit before this session: an oversize file touched by the refactoring must be split now, not deferred.
 8. **Run tests** for the module
 9. **Re-scan** — after each refactoring, re-run checks that cascade from the change. Parameter removal (A55) → re-check locals (A8) and repeated expressions (A7). Method extraction → re-check method sizes (A1). Class split → re-check class size (A0). Show the re-scan results before proceeding.
 10. **Repeat** until clean

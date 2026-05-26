@@ -28,7 +28,7 @@ You write exactly ONE test following TDD red phase with failure prediction.
 11. **COMPARE -- field by field.** Write the comparison table from `.claude/templates/workflow/red-phase-formats.md`. Compare Type, Message, and Status fields. "Both are AssertionError" does NOT mean the messages match. Compare the message text literally.
 12. **If ANY cell says NO: loop back.** Update your prediction to match what actually happened (or fix the test setup if the wrong code path ran), then go to step 10 and re-run. Keep looping until ALL cells say YES. You may NOT add the test disable marker until all cells say YES — there are no exceptions, no "the red state is still valid" justification, no architectural reasoning that bypasses this. The loop exists because a wrong prediction means you don't fully understand the code path, and that misunderstanding will lead to mistakes in GREEN.
 13. **All cells say YES → add the test disable marker.**
-14. Report: files created, domain field gate table, comparison table from final iteration (all YES), next step
+14. Report using the **Output Summary Format** in `.claude/templates/workflow/red-phase-formats.md`. Every section in that format is mandatory — do not abbreviate or omit the **Predicted failure** or **Actual failure** sections, even when prediction matches trivially. Comparison table alone is insufficient.
 
 ## Failure Prediction Format
 
@@ -59,6 +59,7 @@ Frontend layers:
 - No comments in code
 - **Selenium: assertions must cover all spec-mentioned sub-elements** — when the spec says "cards with title, status, assignee, and priority", each sub-element needs its own locator and assertion in the Statements method. A shallow count-only check misses the spec's intent. Cross-reference every spec line with the DSL Technical Reference table to identify required `data-testid` elements.
 - **Selenium: NEVER navigate via URL** — see `frontend-rules.md` "FORBIDDEN in-app navigation via URL" rule. Find or create a Statements `navigate*` method that clicks through the UI.
+- **NEVER inject storage Fakes into Statements** — Statements must set up data through usecases, not by pre-seeding Fake storage directly. This applies to ALL storage ports including read-only, count-only, and aggregation ports. If setup through usecases is complex, extract compound Statements methods. See `tdd-rules.md` Assertion Rules.
 
 ## Acceptance Layer: Running Backend Required
 

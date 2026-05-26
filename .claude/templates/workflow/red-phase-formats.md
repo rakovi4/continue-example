@@ -33,6 +33,8 @@ PREDICTED FAILURES:
 
 **Test method:** `testMethodName`
 
+**Domain field gate table:** (usecase/adapter layers only — see "Domain Field Gate Table" section below for format)
+
 **Predicted failure:**
 - Type: AssertionError
 - Message: "expected message"

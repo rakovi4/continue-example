@@ -11,8 +11,9 @@
 - `adapters`: implement interfaces defined in usecase. Framework-specific code lives here (HTTP controllers, message listeners/publishers, database repositories, external API clients).
 - `application`: wires everything together.
 - `acceptance`: top-level module. Black-box tests via HTTP and Selenium — no compile dependency on backend internals.
-- FORBIDDEN: importing adapters from usecase/domain, importing usecase from domain, importing framework code from domain/usecase.
+- FORBIDDEN: importing adapters from usecase/domain, importing usecase from domain, importing framework code from domain/usecase, **injecting or calling one usecase from another usecase**.
 - Adapter interaction rules: first-layer adapters (controllers, listeners) must not call other first-layer adapters — they delegate to usecases. Third-layer adapters (repositories, clients) must not call other third-layer adapters or usecases — they are called by usecases only.
+- Usecase interaction rule: usecases must not call other usecases. Each usecase is a top-level entry point that orchestrates one user-visible operation; usecases do not compose. If two usecases share logic, extract it into the domain layer (a domain method, value-object behavior, or a stateless domain service) or into a shared helper that is itself not a usecase. Chaining usecases hides the call graph from the controller layer, leaks transactional/authorization boundaries across operations, and entangles top-level scenarios that should evolve independently.
 
 ## Domain-Driven Design
 
@@ -34,7 +35,7 @@
 
 ## File Size
 
-- **Hard limit: 200 lines per file.** After any creation or refactoring, verify with `wc -l`. If a file exceeds 200 lines, split it further. This applies to production code, test classes, Statements classes, and API clients. Third-party generated files (shadcn/ui) are exempt.
+- **Hard limit: 200 lines per file.** After any creation or refactoring, verify with `wc -l`. If a file exceeds 200 lines, split it further. This applies to **every source file regardless of type** — production code, test classes, Statements classes, API clients, stylesheets, and config files. The limit is not class-specific: a file with no classes (a stylesheet, a config file) is still capped at 200 lines. Third-party generated files (shadcn/ui) are exempt.
 
 ## Code Style
 
@@ -43,6 +44,7 @@
 - Methods: usecases = verb+noun (`registerUser`), factory = `create`/`of`/`from`, converters = `toDto`/`toEntity`/`toDomain`.
 - Prefer immutable objects, read-only fields, defensive copies of collections.
 - Move behavior to data: serialization (`json()`), hashing (`computeSignature()`), formatting, builder construction, and derived values belong on the object that holds the fields. Callers should not extract fields to compute derived data externally. When callers repeat builder-then-build patterns, add a semantic factory method on the type.
+- Typed deserialization at the boundary: when parsing a JSON payload (HTTP response, captured request body in tests, message envelope), define a DTO that mirrors the payload and deserialize directly into it — never navigate an untyped JSON tree (chained node-by-key accessors on a generic tree node) and never re-parse a structured body as text (splitting on `:`, regex over an emitted format). Use field-name mapping on the DTO when the wire format differs from the in-code style (e.g., snake_case ↔ camelCase). Callers consume named accessors, not string keys. Reading code you just emitted as plain text is a round-trip code smell — work on the structured payload instead.
 - Eliminate accessor chains: if a caller traverses multiple levels of accessors (e.g., `a.b().c().format()`), add a convenience method on `a` (e.g., `a.cValue()`).
 - Don't extract local variables for single-accessor calls — use `object.field()` directly. Extract a variable when it names a non-obvious computation, is reused across unrelated statements, or isolates a side-effecting call from a pure return mapping. Any call to an injected dependency (usecase, port, repository, API client) is side-effecting regardless of verb.
 - Optional values: use monadic operations (map, flatMap, filter, orElse) — never check-then-unwrap. Let the optional type drive branching.
@@ -57,6 +59,7 @@
 ## Usecases
 
 - Usecases are orchestrators, not logic holders. All domain-specific business rules must be delegated to the domain layer. Usecases should be unaware of underlying technologies and integration protocols.
+- Usecases never depend on other usecases. A usecase MUST NOT inject another usecase, call another usecase, or reuse another usecase's body. When two usecases share logic, the shared part belongs in the domain (entity method, value-object behavior, stateless domain service) or in a non-usecase helper at the usecase layer — never in another usecase. This applies even when the "shared" usecase is read-only or already exists.
 - Fetch everything upfront: a usecase should call one storage port that returns a rich aggregate containing all data needed for the operation. Never inject multiple storage ports to make sequential queries mid-execution (fetch board → per column: fetch tasks → per task: fetch subtasks). Instead, design the aggregate and the port so the storage layer delivers it in one shot.
 - If a usecase has 2+ storage port dependencies queried in sequence, the aggregate is too thin — push the data assembly into the storage port and enrich the domain aggregate.
 - Compute-then-side-effect: separate pure computation from side effects — compute all results upfront as an immutable list, then try the side effect (API call), return the original results or error-mapped results on failure. Don't interleave computation with side effects.

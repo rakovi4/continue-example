@@ -7,7 +7,7 @@ PHP/PHPUnit code examples for acceptance test anti-patterns. For universal rules
 1. **Use descriptive assertion messages** -- add a third argument to `assertEquals` or use named assertions for clear failure messages
 2. **Extract validation helper classes** -- parsing logic (e.g., `SetCookie` parser) belongs in helper classes
 3. **Prefer object equality** -- replace 2+ sequential per-field `assertEquals` calls with `assertEquals($expected, $actual)` (PHPUnit does deep structural comparison on objects)
-4. **Truncate timestamps before comparing** -- use `->setTime(H, i, 0)` or `->format('Y-m-d H:i')` to avoid second/millisecond mismatches
+4. **Use assertEqualsWithDelta for timestamps** -- compare timestamps within a 60-second delta. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 
 ## Anti-Pattern Examples
 
@@ -132,16 +132,17 @@ $this->assertTrue($cookie->httpOnly, 'http only flag');
 
 ### GOOD: Timestamp Assertions with Precision
 ```php
-$truncateToMinutes = fn(DateTimeImmutable $dt) =>
-    $dt->setTime((int)$dt->format('H'), (int)$dt->format('i'), 0);
-
-$this->assertEquals(
-    $truncateToMinutes(new DateTimeImmutable()),
-    $truncateToMinutes($response->createdAt)
+$this->assertEqualsWithDelta(
+    (new DateTimeImmutable())->getTimestamp(),
+    $response->createdAt->getTimestamp(),
+    60,
+    'created at timestamp'
 );
-$this->assertEquals(
-    $truncateToMinutes((new DateTimeImmutable())->modify('+30 days')),
-    $truncateToMinutes($response->expiresAt)
+$this->assertEqualsWithDelta(
+    (new DateTimeImmutable())->modify('+30 days')->getTimestamp(),
+    $response->expiresAt->getTimestamp(),
+    60,
+    'expiration date'
 );
 ```
 

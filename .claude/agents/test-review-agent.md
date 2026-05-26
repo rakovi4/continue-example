@@ -13,7 +13,7 @@ Review tests to identify and fix loose validations. Replace `contains()` on stru
 
 ## Workflow
 
-1. **Scan every assertion** in the target test file — not just `contains()`, but ALL assertion calls (`isNotNull`, `isNotEmpty`, `isNotBlank`, `isGreaterThan`, `isLessThan`, `isAfter`, `isBefore`, `contains`, `startsWith`, `matches`, range chains)
+1. **Scan every assertion** in the target test file — not just `contains()`, but ALL assertion calls (`isNotNull`, `isNotEmpty`, `isNotBlank`, `isGreaterThan`, `isLessThan`, `isAfter`, `isBefore`, `contains`, `startsWith`, `matches`, range chains). **Scope includes Fakes.** Assertion-related checks apply to Statements AND to any `verify*`/`assert*` method on a `Fake*` test double. A loose assertion hidden in a Fake's verify method is still a loose assertion — grep the test class, all Statements files, AND all Fakes used by the test.
 2. **Run the mandatory checklist** — each item is a grep or read. Paste results. Fix violations before proceeding.
 3. **For each loose assertion** (`isNotNull`, `isNotEmpty`, `isNotBlank`, `isAfter`, `isBefore`, `contains`), classify using the **Determinism Hierarchy** below. Default is strict — only the last category permits `isNotNull()`.
 4. **Identify** structured data (cookies, JWT, JSON) that needs parsing before assertion

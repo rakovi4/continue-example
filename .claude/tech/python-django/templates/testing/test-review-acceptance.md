@@ -7,7 +7,7 @@ Python/pytest code examples for acceptance test anti-patterns. For universal rul
 1. **Use descriptive assertion messages** -- add a second argument to `assert` for clear failure messages
 2. **Extract validation helper classes** -- parsing logic (e.g., `SetCookie` parser) belongs in helper classes
 3. **Prefer dataclass equality** -- replace 2+ sequential per-field `assert` calls with `assert actual == expected` (frozen dataclasses do deep structural comparison by default)
-4. **Use `truncate_to_minutes()`** -- for datetime comparisons to avoid microsecond mismatches
+4. **Use timedelta for timestamp comparisons** -- assert `abs(actual - expected) < timedelta(minutes=1)`. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 
 ## Anti-Pattern Examples
 
@@ -191,13 +191,8 @@ class SetCookie:
 ```python
 from datetime import datetime, timedelta
 
-def truncate_to_minutes(dt: datetime) -> datetime:
-    return dt.replace(second=0, microsecond=0)
-
-assert truncate_to_minutes(response.created_at) == truncate_to_minutes(datetime.now())
-assert truncate_to_minutes(response.expires_at) == truncate_to_minutes(
-    datetime.now() + timedelta(days=30)
-)
+assert abs(response.created_at - datetime.now()) < timedelta(minutes=1), "created at timestamp"
+assert abs(response.expires_at - (datetime.now() + timedelta(days=30))) < timedelta(minutes=1), "expiration date"
 ```
 
 ### GOOD: Collection Assertions with Expected Constants

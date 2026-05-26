@@ -38,3 +38,4 @@ infrastructure/backend.pid
 # Logs
 *.log
 bash.exe.stackdump
+/.claude/projects/

@@ -23,8 +23,10 @@ Never write production code without a failing test first.
 ### GREEN Phase
 - Implement ONLY minimal code to pass the test. No extra features, no "while I'm here" improvements.
 - Tests are READ-ONLY (only remove the test disable marker). Statements setup methods may be updated when GREEN adds domain fields/ports that the setup now needs to wire through.
+- **NEVER change assertion expected values in Statements.** Expected values (strings, numbers, prices, reason texts) were defined in RED and verified by prediction. If the running system returns different values than the Statements assert, the test is doing its job — the production code is wrong, not the test. Fix the production code to produce the expected values, or STOP and report the mismatch. Never "correct" assertions to match actual behavior — that defeats the purpose of TDD.
 - **NEVER delete assertions from Statements methods.** Not to meet file size limits, not to "simplify", not for any reason. If a file exceeds 200 lines, extract a new Statements class by concern — never trim assertions. Even when a wait-for-visibility call implies visibility, the explicit assertion is the documented test assertion and must stay.
 - Create: production code, database migrations, persistence entities, repositories as needed.
+- **green-acceptance and green-selenium are remove-marker-only phases.** The ONLY allowed change is removing the test disable/skip marker. No production code changes (backend or frontend), no Statements changes, no new files. If the test does not pass after removing the marker, STOP and report — the missing implementation belongs in an earlier phase (green-usecase, green-adapter, align-design) that was incomplete or skipped. Never "fix" backend code in a green-acceptance/green-selenium step.
 
 ### REFACTOR Phase
 - Improve structure (extract, rename, move, deduplicate). DO NOT change behavior or add features.
@@ -45,17 +47,30 @@ Never write production code without a failing test first.
 - GREEN → REFACTOR: only after test passes.
 - REFACTOR → RED: only after all tests still pass.
 
-### Zero Tolerance for Test Failures
-- When running tests, ALL failures must be investigated — not just the target test.
-- Never dismiss failures as "pre-existing" or "unrelated" without reading the error message and tracing the cause.
+### Zero Tolerance for Test Failures, Skips, and Hidden Non-Execution
+- When running tests, ALL failures must be investigated and resolved — not just the target test.
+- **There is no such thing as a "pre-existing" failure.** Never dismiss a failure as pre-existing, known, or unrelated. If a test fails, it is YOUR problem right now. Either fix the root cause or create a task to fix it — but never report "all tests passed" when the build is red.
+- A build marked FAILED means tests failed. Qualifying it with "but all actual tests passed" or "unrelated OOM" is dismissal — the suite is red and must be fixed before proceeding.
 - If collateral tests fail after a green phase, the new production code likely broke them. Investigate before proceeding.
-- Report ALL test results (pass count AND failure count) in every summary.
+- Report ALL test results (pass count AND failure count AND skip count) in every summary. A skip count of zero is still reported — silence is not the same as zero.
+- **NEVER lie about, obscure, or hide skipped, disabled, or filtered tests — not even when you believe the skip is irrelevant to the task.** A "tests pass" claim or a ticked checkbox is a promise that every test the original command would have executed actually ran to completion and passed. Non-execution includes: test-filter flags that narrow the run to a subset, framework skip mechanisms (precondition assumes, conditional-disable annotations, runtime skip exceptions), env-gated skips where missing env vars or services cause setup to abort, the test disable marker still in place, tag or category exclusions, and any prerequisite you could not satisfy (credentials, external service, fixture data). If even one test in the original scope did not run to completion:
+  1. **Do NOT tick the checkbox if its text names a command you did not run verbatim.** Running the named command with a narrowing filter or against a subset of the intended scope is not the same as running the named command — the checkbox stays `[ ]` or becomes `[~]`.
+  2. Surface the skipped tests by name and reason in BOTH the stop-and-report summary AND the commit message — top-level, not buried in a parenthetical justification.
+  3. STOP and ask the user how to proceed: supply the missing prerequisite, accept the partial run with an explicit `[S]` plus written justification, or block on it. The user decides whether a skip is acceptable — "unrelated", "irrelevant", and "out of scope" are NEVER your call to make unilaterally.
+
+### Flaky Test Fix Protocol
+- **TRIGGER: when the user reports a flaky test, STOP.** Your FIRST action must be running the test — not reading code, not investigating, not reasoning about causes. Reading code before reproducing leads to premature fixes that skip verification.
+- **FORBIDDEN before reproduce completes:** reading test source code, reading production code, spawning explore/research agents, suggesting fixes, making code changes, forming hypotheses about root cause. The only allowed action is running the failing test 5+ times.
+- **Always follow: reproduce → fix → verify.** Never skip reproduce or verify.
+- **Reproduce:** run the failing test multiple times (5+) to confirm flakiness and understand failure frequency. If it passes consistently, it's not flaky — investigate the CI environment difference.
+- **Fix:** apply the targeted fix after understanding the root cause (now you may read code).
+- **Verify:** run the test multiple times again (5+) to confirm the fix eliminated the flakiness. A single pass is not proof — flaky means intermittent.
 
 ### Test Execution Efficiency
 - **Run the narrowest scope possible.** When investigating a failure, use the test filter flag to run only the failing test class — never rerun the entire suite just to see one test's output.
 - **Never re-run tests to get failure details you already have.** The output file from a completed run contains full stack traces. Use the `Read` tool on the output file — don't re-run the suite or even individual tests just to see the error. Only re-run a test when you've changed code and need to verify the fix.
 - **Escalate scope only when needed:** single test → test class → module → full suite. Start narrow, widen only if the failure depends on test ordering or shared state.
-- **Stop on first failure — then investigate immediately.** When running acceptance suites, launch with `run_in_background: true` and poll the output file for failure/success markers. When the first failure appears: (1) stop the running test suite (`TaskStop`), (2) read the stack trace from the output file, (3) investigate the root cause. Do NOT continue reading more failures, do NOT call `TaskOutput` to wait for completion, do NOT collect a summary of all failures. The first failure is the only one that matters — fix it before re-running. Waiting wastes minutes while the answer is already in front of you.
+- **Stop on first failure — then investigate immediately.** When running acceptance suites, launch with `run_in_background: true` and poll the output file for failure/success markers. When the first failure appears: (1) stop the running test suite (`TaskStop`), (2) **tell the user explicitly**: "Stopped after the first failure. N tests passed, 1 failed, M tests did not run — there may be additional failures in the remaining tests." (3) read the stack trace from the output file, (4) investigate the root cause. Do NOT continue reading more failures, do NOT call `TaskOutput` to wait for completion, do NOT collect a summary of all failures. The first failure is the only one that matters — fix it before re-running. Waiting wastes minutes while the answer is already in front of you. **Never present a stopped-early run as if it were a complete run.** The user must always know how many tests were skipped.
 - **Show progress while tests run.** Never block silently waiting for test completion. A single Bash call with a polling loop does NOT show progress — output only appears when the command finishes. Instead, make **separate short Bash calls** to check the output file, so each call's output is displayed to the user immediately. The user must always have visibility into what is happening — silent waits erode trust.
 
 ## Commit Discipline
@@ -91,6 +106,12 @@ Never write production code without a failing test first.
 - Acceptance tests: full app, black box via HTTP API only. Never access DB directly.
 - Each test independent: no shared mutable state, reset mocks/fakes before each test.
 
+### Load Test Isolation
+- **Each mutating load test owns a dedicated baked disposable user.** Declare the user as an immutable class-level constant on the Statements (one user per Statements class). Never share a mutated user across mutating tests, and never reset the baked baseline between tests — the baseline is bulk data, not isolation state. Read-only load tests use the shared baseline users.
+- **Per-user data IDs are inlined as immutable constants** computed from the baseline generator's deterministic formulas (UUIDs, external resource IDs, child entity IDs, business keys). Keep the generator formulas as the single source of truth; never derive IDs at runtime in test code.
+- **Witness user for cross-user assertions.** When a mutating load test must assert "another user is unaffected", use a separate, never-mutated baked user as the witness — never the test's own disposable user.
+- **No global state-reset hooks for test isolation.** Per-test teardown that recreates the database or container between mutating load tests is forbidden — sequential test execution combined with per-test dedicated users provides isolation at zero infrastructure cost. See `ProductSpecification/decisions/load-test-isolation-decision.md`.
+
 ### Statements Dependency Limit
 - A Statements class with more than 8 injected dependencies is a sign it needs splitting. Extract a focused Statements class per concern (e.g., `TaskStatements` + `BoardStatements` instead of one monolith).
 
@@ -98,7 +119,7 @@ Never write production code without a failing test first.
 - **NEVER create a Statements method that only forwards to another Statements class.** If `FormStatements` injects `FieldStatements` and creates `assertFieldVisible()` that just calls `fieldStatements.assertFieldVisible()`, that's a middleman. Instead, have the test (or test base class) inject `FieldStatements` directly and call it without the indirection. Each Statements class owns its own concern — tests compose by injecting multiple focused Statements, not by chaining through a parent.
 
 ### Assertion Rules
-**NEVER inject storage adapters into Statements classes.** Statements depend only on usecases, other Statements, and Fake adapters for setup only (e.g., `FakeEmailClient.setValidSender()`). Use usecases to verify state, not storage queries.
+**NEVER inject storage ports into Statements classes — not for assertions, not for setup.** Set up data through usecases; verify state through usecases. Statements depend only on usecases, other Statements, and external-service Fakes for configuration (e.g., `FakeEmailClient.setValidSender()`, `FakeExternalApiClient.setResponse()`). External-service Fakes configure behavior of third-party integrations that have no usecase-level setup API — storage Fakes do not qualify. **No reclassification:** a port is a storage port if it reads from or writes to the database — regardless of whether it is read-only, count-only, aggregation-only, or has no corresponding write usecase. "Read-only derived view" and "analogous to external-service Fake" are not valid justifications. If setup through existing usecases is complex, that complexity is the test's job — simplify by extracting compound Statements methods, not by injecting storage Fakes.
 
 **Default to strict assertions.** Treat every value as deterministic until proven otherwise. Error messages, reason strings, and status codes are defined by us — assert exact equality. IDs returned from setup (taskId, userId) must be captured and asserted with exact equality. Timestamps must be tightly bounded (within 30 seconds of test execution), never just a non-null check. Only auto-generated primary keys with no retrieval API may use non-null assertions.
 

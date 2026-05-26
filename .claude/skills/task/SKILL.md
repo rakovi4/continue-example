@@ -1,13 +1,13 @@
 ---
 name: task
-description: Create a new task (bug or refactoring) with spec and progress tracking. Use when user wants to create a task or mentions /task command.
+description: Create a new task (bug, refactoring, or qa) with spec and progress tracking. Use when user wants to create a task or mentions /task command.
 ---
 
 # /task - Create Task
 
 ## Input
 
-- **type** (optional): `bug` or `refactoring`
+- **type** (optional): `bug`, `refactoring`, or `qa`
 - **title** (optional): Short title (2-5 words)
 
 ## Workflow
@@ -20,7 +20,7 @@ List ALL directories under `ProductSpecification/tasks/` AND `ProductSpecificati
 
 ### 2. Determine Type and Title
 
-If arguments provided, parse type (`bug` or `refactoring`) and title from args.
+If arguments provided, parse type (`bug`, `refactoring`, or `qa`) and title from args.
 If no arguments, ask interactively: type and short title (2-5 words).
 
 ### 3. Create Folder
@@ -31,11 +31,13 @@ Create `ProductSpecification/tasks/{N}-{type}-{slug}/` where slug is lowercase-h
 
 Gather from user:
 
-**All types:** Problem, Solution, Affected Layers (domain, usecase, h2, rest, email, frontend), Key Files.
+**Bug / Refactoring:** Problem, Solution, Affected Layers (domain, usecase, h2, rest, email, frontend), Key Files.
 
 **Bug only:** Reproduction steps.
 
 **Refactoring only:** Numbered steps with clear scope.
+
+**QA only:** Problem (why this checklist exists), Solution (when to run, environment, session duration), Cases (numbered one-line items expressing intent — no Gherkin, no implementation detail). No Affected Layers, no Key Files (QA tasks don't change code).
 
 ### 5. Generate spec.md
 
@@ -45,14 +47,15 @@ Write `ProductSpecification/tasks/{N}-{type}-{slug}/spec.md` using the format in
 
 Select fix profile based on type and affected layers:
 
-| Affected Layers | Section |
-|-----------------|---------|
-| Backend only | `## Backend` (standard backend sequence with `[ ] adapters-discovery`) |
-| Frontend only | `## Frontend` (standard frontend sequence) |
-| Both | `## Backend` + `## Frontend` |
+| Type / Affected Layers | Section |
+|------------------------|---------|
+| Bug — Backend only | `## Backend` (standard backend sequence with `[ ] adapters-discovery`) |
+| Bug — Frontend only | `## Frontend` (standard frontend sequence) |
+| Bug — Both | `## Backend` + `## Frontend` |
 | Refactoring | `## Fix` with user-defined steps |
+| QA | `## Cases` with one `[ ]` checkbox per case (no TDD sub-steps) |
 
-Write `ProductSpecification/tasks/{N}-{type}-{slug}/progress.md` using the matching format from the template. Bug tasks use `[ ] adapters-discovery` -- adapter discovery runs when this step is reached. Refactoring steps are user-defined from step 4.
+Write `ProductSpecification/tasks/{N}-{type}-{slug}/progress.md` using the matching format from the template. Bug tasks use `[ ] adapters-discovery` -- adapter discovery runs when this step is reached. Refactoring steps are user-defined from step 4. QA tasks mirror the `## Cases` section of `spec.md` as checkboxes — the tester ticks them during a session.
 
 ### 7. Review and Commit
 

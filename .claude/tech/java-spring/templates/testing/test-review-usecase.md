@@ -181,6 +181,34 @@ authenticationStatements.login(authenticationStatements.loginRequest());
 authenticationStatements.loginTestUser();
 ```
 
+### BAD: Loose assertion inside a Fake verify method
+```java
+// Fake (test infrastructure) — same strict-assertion contract as Statements
+public class FakePasswordResetTokenSender implements PasswordResetTokenSender {
+    private final LinkedList<PasswordResetToken> sentTokens = new LinkedList<>();
+
+    public void verifyPasswordResetEmailSent(String email) {
+        assertThat(sentTokens.poll())
+            .as("Password reset email should be sent")
+            .isNotNull()
+            .satisfies(token -> {
+                assertThat(token.getEmail()).isEqualTo(new Email(email));
+                assertThat(token.getToken()).isNotBlank(); // LOOSE — token value is capturable
+            });
+    }
+}
+// GOOD: capture the stored token via the existing reset-token storage usecase
+// in Statements, then pass the exact expected value to the Fake verify method.
+public void verifyPasswordResetEmailSent(String email, String expectedTokenValue) {
+    assertThat(sentTokens.poll())
+        .as("Password reset email")
+        .satisfies(token -> assertThat(token)
+            .usingRecursiveComparison()
+            .isEqualTo(new PasswordResetToken(new Email(email), expectedTokenValue)));
+}
+```
+Rule: every assertion in a `verify*`/`assert*` method on a `Fake*` class is in scope for /test-review. The same Determinism Hierarchy applies — `isNotBlank()` / `isNotNull()` are only acceptable for category 4 (truly opaque), and tokens generated and stored by production code are category 2 (capturable from setup).
+
 ### BAD: Unreferenced domain classes/fields from RED phase
 ```java
 // RED created Task.java (4 fields) and Column has List<Task>

@@ -6,7 +6,7 @@ TypeScript/Vitest code examples for acceptance test anti-patterns. For universal
 
 1. **Extract validation helper classes** -- parsing logic (e.g., `SetCookie` parser) belongs in helper classes
 2. **Prefer toEqual() for structural comparison** -- replace 2+ sequential per-field assertions with `expect(actual).toEqual(expected)` using a constructed expected object
-3. **Use minute-truncation for timestamp comparisons** -- truncate to minutes before comparing to avoid millisecond mismatches
+3. **Use closeTo for timestamp comparisons** -- assert that the difference between actual and expected is within 60 seconds. Never truncate to minutes -- truncation causes flaky failures at minute boundaries
 
 ## Anti-Pattern Examples
 
@@ -156,13 +156,13 @@ expect(cookie.httpOnly).toBe(true);
 
 ### GOOD: Timestamp Assertions with Precision
 ```typescript
-const truncateToMinutes = (d: Date) => new Date(Math.floor(d.getTime() / 60000) * 60000);
+const diffSeconds = (a: Date, b: Date) => Math.abs(a.getTime() - b.getTime()) / 1000;
 
-expect(truncateToMinutes(new Date(response.createdAt)))
-    .toEqual(truncateToMinutes(new Date()));
+expect(diffSeconds(new Date(response.createdAt), new Date()))
+    .toBeLessThan(60);
 
-expect(truncateToMinutes(new Date(response.expiresAt)))
-    .toEqual(truncateToMinutes(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)));
+expect(diffSeconds(new Date(response.expiresAt), new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)))
+    .toBeLessThan(60);
 ```
 
 ### GOOD: Collection Assertions with Expected Constants
