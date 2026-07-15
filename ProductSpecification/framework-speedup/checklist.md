@@ -10,7 +10,7 @@ no task is a hole — fix the mapping, don't ignore it.
 
 - [ ] **1** Speed regression 10–12 → 3 per workday — quantified in README baseline; addressed by the initiative as a whole (T1–T7)
 - [x] **1.1** 6 vs 3–4 parallel sessions — decision: NOT a lever; per-session speed instead (README "Target"). No task by design
-- [ ] **1.2a** Measure review-agent execution time → **T1**
+- [ ] **1.2a** Measure review-agent execution time → **T1** — timings must be hook-emitted by the harness (dispatch/return timestamps), NEVER agent-self-reported: the footprint must be objective, immune to hallucination
 - [ ] **1.2b** Run review agents in parallel with quality-gate agents of the step → **T6**
 - [ ] **1.2c** Find a way to speed review agents up → **T6**
 - [ ] **1.3** Quality-gate agents in parallel where possible → **T6** (ceiling note: a gate cannot precede the agent whose output it inspects — parallelizable part is detection, not application)
@@ -18,7 +18,7 @@ no task is a hole — fix the mapping, don't ignore it.
 - [ ] **1.5a** Parallel red+green cycle per discovered adapter → **T3**
 - [ ] **1.5b** Remove human review step between adapter pairs → **T3** (D6)
 - [ ] **1.6a** Parallel red-coverage steps (N gaps → N−1 parallel reds + 1 green after) → **T5**
-- [ ] **1.6b** Coverage red agents start WITHOUT waiting for the original green's refactor+review batch → **T5** — note: crosses the atomic-work-unit boundary in `.claude/rules/workflow.md`; T5 must settle the commit/stop-point semantics explicitly
+- [ ] **1.6b** Coverage red agents start WITHOUT waiting for the original green's refactor+review batch → **T5** — crosses the atomic-work-unit boundary in `.claude/rules/workflow.md`; commit semantics settled by **D7** (single-committer script, serial commits, prediction-mismatch rule as drift net)
 - [ ] **1.7** Verify refactor agents run in parallel; same for test-review → **T6**
 - [ ] **1.8** Verify refactor agents run in parallel with review agents → **T6** (designed-in per SKILL.md "Pre-Commit Review Passes"; T1 measures whether reality matches)
 - [ ] **1.9a** Frontend: application red-green ∥ client red-green → **T4**
