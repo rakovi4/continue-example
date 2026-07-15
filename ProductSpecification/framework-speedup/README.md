@@ -31,7 +31,7 @@ lever.
 | D4 | Benchmark = **theoretical ceiling only**: no-review red→green-acceptance run on a fixed commit, old vs new implementation, human factor excluded | Fixtures: story 2 first backend scenario; story 1 first UI scenario |
 | D5 | `/story` (spec generator) is only ever called from `/continue` → downgrade to prompt template; the `/story` name is freed for a backlog-add skill with a story-quality guardrail | No standalone usage exists, so no muscle-memory break |
 | D6 | Human review steps between parallelized red/green pairs (1.5, 1.9) are removed | Required for the parallel pipelines to be pipelines at all |
-| D7 | Under Workflow orchestration, sub-agents never run `git commit` — the script is the single committer, landing commits serially at defined points (worktree isolation only when parallel agents must write the same files) | Eliminates the commit race that cross-unit overlap (1.6b) would otherwise create; semantic drift (rename vs freshly written test) is caught by the red prediction-mismatch rule |
+| D7 | Under Workflow orchestration, sub-agents never run `git commit` — the script is the single committer, landing commits serially at defined points. **Attribution is preserved**: one commit per logical unit at today's granularity (red / green / refactor), staged by pathspec from each agent's returned file list (`git add -A` forbidden while concurrent units are in flight); when two units write the same file, escalate that unit to worktree isolation and land its diff as its own commit | Eliminates the commit race that cross-unit overlap (1.6b) would otherwise create without pooling changes into mega-commits; semantic drift (rename vs freshly written test) is caught by the red prediction-mismatch rule |
 
 ## Task Breakdown
 
