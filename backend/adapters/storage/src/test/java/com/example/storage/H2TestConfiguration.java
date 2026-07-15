@@ -1,4 +1,4 @@
-package com.example.h2;
+package com.example.storage;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

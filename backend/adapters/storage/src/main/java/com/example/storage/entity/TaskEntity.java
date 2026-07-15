@@ -1,4 +1,4 @@
-package com.example.h2.entity;
+package com.example.storage.entity;
 
 import com.example.domain.board.ColumnType;
 import com.example.domain.task.Description;

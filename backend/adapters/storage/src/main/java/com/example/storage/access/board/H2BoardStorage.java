@@ -1,11 +1,11 @@
-package com.example.h2.access.board;
+package com.example.storage.access.board;
 
 import com.example.domain.board.Board;
 import com.example.domain.board.Column;
 import com.example.domain.board.ColumnType;
 import com.example.domain.task.Task;
-import com.example.h2.entity.TaskEntity;
-import com.example.h2.repository.TaskJpaRepository;
+import com.example.storage.entity.TaskEntity;
+import com.example.storage.repository.TaskJpaRepository;
 import com.example.usecase.board.BoardStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

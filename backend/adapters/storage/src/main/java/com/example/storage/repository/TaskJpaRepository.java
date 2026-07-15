@@ -1,6 +1,6 @@
-package com.example.h2.repository;
+package com.example.storage.repository;
 
-import com.example.h2.entity.TaskEntity;
+import com.example.storage.entity.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.example.h2.access.board;
+package com.example.storage.access.board;
 
 import com.example.domain.board.Board;
 import com.example.domain.board.Column;
