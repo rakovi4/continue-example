@@ -6,6 +6,7 @@ de-facto auto-apply practice for review concerns, and fixing the `/story` skill 
 
 - [initial-prompt.md](initial-prompt.md) — problem statement + follow-up clarifications
 - [checklist.md](checklist.md) — traceability: every concern → task (or explicit non-task decision)
+- [dependencies.md](dependencies.md) — task dependency tree + parallel wave plan for Tasks 8–16
 
 ## Baseline (measured from `../stories.md` history)
 
