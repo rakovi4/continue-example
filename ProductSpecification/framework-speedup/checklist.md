@@ -1,8 +1,8 @@
 # Traceability Checklist
 
 Every item from [initial-prompt.md](initial-prompt.md) plus every concern surfaced during
-the discussion, mapped to a task (T1–T8, see [README.md](README.md)) or an explicit
-non-task decision (D1–D6). Tick a row only when the covering task's change has landed
+the discussion, mapped to a task (T1–T9, see [README.md](README.md)) or an explicit
+non-task decision (D1–D8). Tick a row only when the covering task's change has landed
 (or, for decision rows, when the decision is reflected in the docs). An unticked row with
 no task is a hole — fix the mapping, don't ignore it.
 
@@ -25,7 +25,7 @@ no task is a hole — fix the mapping, don't ignore it.
 - [ ] **1.9b** Remove human review phase between frontend red-green cycles → **T4** (D6)
 - [x] **C1** "Make it deterministic" concern → **D1** (Workflow tool) + **T2**
 - [ ] **C2** Estimate every step's potential time cut → **T1** (its required output is a per-step time-budget table, not just raw logs)
-- [ ] **C3** Ideal benchmark old vs new → **T1** per **D4** (ceiling-only, fixed commit, story 2 backend scenario 1 + story 1 UI scenario 1)
+- [ ] **C3** Ideal benchmark old vs new → **T1** per **D4** (ceiling-only, fixed commit; fixture revised to story 1 backend scenario 3.1 + story 1 UI scenario 1) and **D8** (synthetic fixture commits — history is squashed, so pre-3.1 state is rebuilt by one-time replay, not reset)
 - [ ] **2** Auto-accept/apply/commit review concerns → **T7** per **D3** (blanket, separate commit, post-factum review)
 - [ ] **3a** Downgrade spec-generating `/story` to a `/continue`-internal prompt template → **T8**
 - [ ] **3b** New `/story` skill = add story row to backlog in `stories.md` → **T8**
@@ -33,12 +33,14 @@ no task is a hole — fix the mapping, don't ignore it.
 
 ## Surfaced during discussion
 
-- [ ] **N1** Stories growing to ~100 test cases ⇒ multi-week completion — story-size guardrail folded into **T8** (size/splitting check at backlog-add time)
-- [ ] **N2** Agents don't help parallelize ACROSS stories/tasks (keeping 3–4 sessions fed) — **not tasked**; README "Open Concerns"; revisit after T1–T2
+- [ ] **N1** Stories growing to ~100 test cases ⇒ multi-week completion — two-sided: **T8** prevents (size/splitting check at backlog-add time), **T9** parallelizes the ones that exist anyway (dependency tree + multi-stream progress)
+- [ ] **N2** Agents don't help parallelize ACROSS stories/tasks (keeping 3–4 sessions fed) → **T9** — the scenario dependency tree also drives cross-story "what unblocks what" ordering
 - [ ] **N3** "Paranoid bureaucratic" gate perception — gate pruning waits for T1 per-gate cost data; README "Open Concerns"
 - [x] **N4** Workflow tool billing on subscription → answered, **D2**; no task needed
 - [x] **N5** Muscle-memory risk of repurposing `/story` → resolved: nobody invokes it standalone (**D5**)
 - [ ] **N6** Review thoroughness drifting down under speed pressure — mitigation via **T7** only; README "Open Concerns"
+- [x] **N7** No historical commit to reset to for the benchmark fixture (implementation was squashed) → **D8**: synthetic fixture commits built by one-time no-review replay (`benchmark/pre-3.1`, `benchmark/pre-ui-1.1`)
+- [x] **N8** Team-emerged practice: per-story dependency tree + separate progress files per stream → formalized as **T9**
 
 ## Coverage audit
 
@@ -53,6 +55,6 @@ no task is a hole — fix the mapping, don't ignore it.
 | Concerns (determinism, estimates, benchmark) | T2/D1, T1, T1/D4 |
 | 2 | T7/D3 |
 | 3 | T8/D5 |
-| New (N1–N6) | T8, D2, D5, open-concerns register |
+| New (N1–N8) | T8, T9, D2, D5, D8, open-concerns register |
 
 No initial-prompt item is unmapped.
