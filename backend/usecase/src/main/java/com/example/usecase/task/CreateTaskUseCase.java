@@ -7,5 +7,6 @@ public class CreateTaskUseCase {
 
     public void createTask(CreateTaskRequest request) {
         request.toTitle();
+        request.toDescription();
     }
 }

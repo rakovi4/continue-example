@@ -48,15 +48,19 @@
 - [x] green-acceptance
 
 ### 2.3 Reject description exceeding 5000 characters
-- [~] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [x] design (see ADR: validation-pattern-decision.md)
+- [x] red-usecase
+- [x] green-usecase
+- [x] adapters-discovery (rest only — validation rejects before persistence)
+- [x] red-adapter rest
+- [x] green-adapter rest
+- [S] red-adapter storage (no storage port — validation rejects before persistence)
+- [S] green-adapter storage (no storage port — validation rejects before persistence)
+- [x] green-acceptance
 
 ### 3.1 Create task with title only
-- [ ] red-acceptance
+- [~] red-acceptance
 - [ ] design
 - [ ] red-usecase
 - [ ] green-usecase

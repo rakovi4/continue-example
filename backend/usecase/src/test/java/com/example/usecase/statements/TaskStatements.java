@@ -11,6 +11,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 @RequiredArgsConstructor
 public class TaskStatements {
 
+    private static final String VALID_TITLE = "Valid title";
+
     private final CreateTaskUseCase createTaskUseCase;
 
     private Throwable caughtException;
@@ -21,6 +23,10 @@ public class TaskStatements {
 
     public void createTaskWithLongTitle(int length) {
         createTaskExpectingError(new CreateTaskRequest("a".repeat(length)));
+    }
+
+    public void createTaskWithLongDescription(int length) {
+        createTaskExpectingError(new CreateTaskRequest(VALID_TITLE, "a".repeat(length)));
     }
 
     public void createTaskWithNullTitle() {

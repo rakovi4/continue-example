@@ -22,6 +22,10 @@ public class TaskStatements {
         lastResponse = applicationClient.createTask(new CreateTaskRequest("a".repeat(101)));
     }
 
+    public void whenUserCreatesTaskWithLongDescription() {
+        lastResponse = applicationClient.createTask(new CreateTaskRequest("Valid title", "a".repeat(5001)));
+    }
+
     public void whenUserCreatesTaskWithEmptyTitle() {
         lastResponse = applicationClient.createTask(new CreateTaskRequest(""));
     }
