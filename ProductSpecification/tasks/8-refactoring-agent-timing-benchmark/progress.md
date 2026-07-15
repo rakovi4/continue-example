@@ -5,19 +5,18 @@ Type: refactoring
 ## Spec
 - [x] spec
 
-## Fix
+## Streams
 
-### Step 1: Hook-emitted agent timings
-- [ ] refactor (PreToolUse/PostToolUse hooks on Agent tool + JSONL timing log)
+Work is split into two parallel streams (see
+[framework-speedup/dependencies.md](../../framework-speedup/dependencies.md),
+wave 1). This file is the single source of truth **as an index**: which streams
+exist and who claimed them. Per-stream state lives in the stream files.
 
-### Step 2: Time-budget aggregation
-- [ ] refactor (aggregation script producing the per-step time-budget table)
+| Stream | File | Scope | Claimed by |
+|---|---|---|---|
+| hooks | [progress-hooks.md](progress-hooks.md) | Steps 1–2: timing hooks + aggregation | — |
+| fixtures | [progress-fixtures.md](progress-fixtures.md) | Steps 3–4: fixture replay + ceiling baselines | — |
 
-### Step 3: Synthetic benchmark fixtures (D8)
-- [ ] refactor (no-review replay of story 1 scenarios 1.1→2.3 → branch benchmark/pre-3.1)
-- [ ] refactor (continue replay through story 1 backend → branch benchmark/pre-ui-1.1)
-
-### Step 4: Ceiling baseline runs (D4)
-- [ ] refactor (backend ceiling run: scenario 3.1 from benchmark/pre-3.1, old implementation)
-- [ ] refactor (frontend ceiling run: story 1 UI scenario 1 from benchmark/pre-ui-1.1, old implementation)
-- [ ] refactor (record baseline time-budget table in framework-speedup README)
+The task is done when every checkbox in both stream files is `[x]` (or `[S]`).
+Step 4 (fixtures stream) is blocked until the hooks stream completes — the
+baseline runs must be captured by the timing hooks.
