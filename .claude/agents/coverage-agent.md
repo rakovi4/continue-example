@@ -9,7 +9,7 @@ Runs after GREEN phase to find uncovered branches and plan remediation.
 
 ## Input
 
-- **module**: usecase | domain | adapter name (h2, rest, email, etc.)
+- **module**: usecase | domain | adapter name (storage, rest, email, etc.)
 - **focus**: boolean (restrict to classes changed since last commit)
 - **story_dir**: path to current story directory (for progress.md updates)
 - **current_scenario**: scenario heading in progress.md (e.g., "2.1 Reject empty title")
@@ -40,7 +40,7 @@ See `.claude/templates/workflow/coverage-formats.md` for the before/after format
 Coverage steps use the same layer as the current green phase:
 - After `green-usecase` → `red-usecase` + `green-usecase`
 - After `green-adapter rest` → `red-adapter rest` + `green-adapter rest`
-- After `green-adapter h2` → `red-adapter h2` + `green-adapter h2`
+- After `green-adapter storage` → `red-adapter storage` + `green-adapter storage`
 
 ## Dead Code Marking
 
@@ -52,3 +52,7 @@ See `.claude/templates/workflow/coverage-formats.md` for dead code comment forma
 - Never modify test files — only progress.md
 - If ALL gaps are dead code, report clean (no steps to add) and list dead code for refactor
 - Keep coverage descriptions concise — 5-10 words max
+
+## Progress Logging
+
+Read `.claude/guidelines/agent-logging.md` and append your required `coverage-agent` milestones to `infrastructure/agent-progress.log` as you work.
