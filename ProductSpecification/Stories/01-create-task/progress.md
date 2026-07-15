@@ -22,15 +22,21 @@
 - [x] green-acceptance
 
 ### 2.1 Reject empty title
-- [~] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [x] design (see ADR: validation-pattern-decision.md)
+- [x] red-usecase
+- [x] green-usecase
+- [x] red-usecase (coverage: Title rejects null value)
+- [S] green-usecase (coverage: Title rejects null value — code already handles null, test passes immediately)
+- [x] adapters-discovery (rest only — validation rejects before persistence)
+- [x] red-adapter rest
+- [x] green-adapter rest
+- [S] red-adapter storage (no storage port — validation rejects before persistence)
+- [S] green-adapter storage (no storage port — validation rejects before persistence)
+- [x] green-acceptance
 
 ### 2.2 Reject title exceeding 100 characters
-- [ ] red-acceptance
+- [~] red-acceptance
 - [ ] design
 - [ ] red-usecase
 - [ ] green-usecase

@@ -1,8 +1,11 @@
 package com.example.acceptance.clients.application;
 
+import com.example.acceptance.clients.application.dto.ErrorResponse;
 import com.example.acceptance.clients.application.dto.board.BoardResponse;
 import com.example.acceptance.clients.application.dto.board.ColumnResponse;
+import com.example.acceptance.clients.application.dto.task.CreateTaskRequest;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,5 +43,18 @@ public class ApplicationClient {
 
         List<ColumnResponse> columns = response.jsonPath().getList("columns", ColumnResponse.class);
         return new BoardResponse(columns);
+    }
+
+    public Response createTask(CreateTaskRequest request) {
+        return RestAssured
+                .given()
+                .baseUri(baseUrl)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .post("/api/v1/tasks")
+                .then()
+                .extract()
+                .response();
     }
 }
