@@ -10,15 +10,19 @@
 ## Backend Scenarios (01_API_Tests.md)
 
 ### 1.1 Get empty board
-- [~] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [x] design (see ADR: board-domain-model-decision.md)
+- [x] red-usecase
+- [x] green-usecase
+- [x] adapters-discovery (BoardStorage → rest, storage)
+- [x] red-adapter rest
+- [x] green-adapter rest
+- [x] red-adapter storage
+- [x] green-adapter storage
+- [x] green-acceptance
 
 ### 2.1 Reject empty title
-- [ ] red-acceptance
+- [~] red-acceptance
 - [ ] design
 - [ ] red-usecase
 - [ ] green-usecase
