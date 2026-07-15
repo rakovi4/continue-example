@@ -36,7 +36,17 @@ lever.
 
 ## Task Breakdown
 
-Impact figures are hypotheses until Task 1 produces measured numbers.
+Impact figures are hypotheses until T1 produces measured numbers.
+
+Task folders (created 2026-07-15): T1 → [Task 8](../tasks/8-refactoring-agent-timing-benchmark/spec.md),
+T2 → [Task 9](../tasks/9-refactoring-workflow-orchestration/spec.md),
+T3 → [Task 10](../tasks/10-refactoring-parallel-adapter-pipelines/spec.md),
+T4 → [Task 11](../tasks/11-refactoring-parallel-frontend-chains/spec.md),
+T5 → [Task 12](../tasks/12-refactoring-coverage-red-fanout/spec.md),
+T6 → [Task 13](../tasks/13-refactoring-review-gate-parallelism/spec.md),
+T7 → [Task 14](../tasks/14-refactoring-auto-apply-review-fixes/spec.md),
+T8 → [Task 15](../tasks/15-refactoring-story-skill-split/spec.md),
+T9 → [Task 16](../tasks/16-refactoring-dependency-tree-streams/spec.md).
 
 | Task | Scope | Depends on | Expected impact |
 |---|---|---|---|
