@@ -36,15 +36,19 @@
 - [x] green-acceptance
 
 ### 2.2 Reject title exceeding 100 characters
-- [~] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [x] design (see ADR: validation-pattern-decision.md)
+- [x] red-usecase
+- [x] green-usecase
+- [x] adapters-discovery (none — validation handler exists from 2.1)
+- [S] red-adapter rest (no new REST behavior — validation handler exists from 2.1)
+- [S] green-adapter rest (no new REST behavior — validation handler exists from 2.1)
+- [S] red-adapter storage (no storage port — validation rejects before persistence)
+- [S] green-adapter storage (no storage port — validation rejects before persistence)
+- [x] green-acceptance
 
 ### 2.3 Reject description exceeding 5000 characters
-- [ ] red-acceptance
+- [~] red-acceptance
 - [ ] design
 - [ ] red-usecase
 - [ ] green-usecase

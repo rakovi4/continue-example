@@ -19,6 +19,10 @@ public class TaskStatements {
         createTaskExpectingError(new CreateTaskRequest(""));
     }
 
+    public void createTaskWithLongTitle(int length) {
+        createTaskExpectingError(new CreateTaskRequest("a".repeat(length)));
+    }
+
     public void createTaskWithNullTitle() {
         createTaskExpectingError(new CreateTaskRequest(null));
     }

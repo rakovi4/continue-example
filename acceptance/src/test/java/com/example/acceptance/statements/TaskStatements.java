@@ -18,6 +18,10 @@ public class TaskStatements {
 
     private Response lastResponse;
 
+    public void whenUserCreatesTaskWithLongTitle() {
+        lastResponse = applicationClient.createTask(new CreateTaskRequest("a".repeat(101)));
+    }
+
     public void whenUserCreatesTaskWithEmptyTitle() {
         lastResponse = applicationClient.createTask(new CreateTaskRequest(""));
     }
