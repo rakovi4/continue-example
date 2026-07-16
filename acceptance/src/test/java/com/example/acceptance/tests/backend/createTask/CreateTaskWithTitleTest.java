@@ -2,13 +2,11 @@ package com.example.acceptance.tests.backend.createTask;
 
 import com.example.acceptance.statements.TaskStatements;
 import com.example.acceptance.tests.backend.AbstractBackendTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("3.1 Create task with title only")
-@Disabled("TDD Red Phase - POST /api/v1/tasks returns 201 with empty body (no Content-Type), TaskResponse cannot be parsed")
 public class CreateTaskWithTitleTest extends AbstractBackendTest {
 
     @Autowired
