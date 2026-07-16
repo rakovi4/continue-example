@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +17,14 @@ public class CreateTaskUseCase {
     private final Clock clock;
 
     public Task createTask(CreateTaskRequest request) {
-        request.toTitle();
-        request.toDescription();
-        throw new UnsupportedOperationException("Not implemented yet");
+        var title = request.toTitle();
+        var description = request.toDescription();
+        var task = boardStorage.getBoard().addTask(title, description, now());
+        boardStorage.saveTask(task);
+        return task;
+    }
+
+    private Instant now() {
+        return Instant.now(clock).truncatedTo(ChronoUnit.MILLIS);
     }
 }

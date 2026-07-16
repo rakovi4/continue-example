@@ -14,6 +14,6 @@ public class CreateTaskRequestDto {
     private String description;
 
     public CreateTaskRequest toUsecaseRequest() {
-        return new CreateTaskRequest(title, description != null ? description : "");
+        return new CreateTaskRequest(title, description);
     }
 }

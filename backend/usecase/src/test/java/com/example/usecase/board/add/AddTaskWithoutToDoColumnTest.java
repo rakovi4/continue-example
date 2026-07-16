@@ -1,11 +1,9 @@
 package com.example.usecase.board.add;
 
 import com.example.usecase.ApplicationTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@Disabled("TDD Red Phase - Board.addTask throws UnsupportedOperationException instead of IllegalStateException")
 @DisplayName("3.1 Create task with title only - board loaded without a To Do column")
 class AddTaskWithoutToDoColumnTest extends ApplicationTest {
 

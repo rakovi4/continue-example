@@ -13,7 +13,7 @@ public class CreateTaskRequest {
     private final String description;
 
     public CreateTaskRequest(String title) {
-        this(title, "");
+        this(title, null);
     }
 
     public CreateTaskRequest(String title, String description) {
@@ -26,6 +26,6 @@ public class CreateTaskRequest {
     }
 
     public Description toDescription() {
-        return new Description(description);
+        return description == null ? null : new Description(description);
     }
 }

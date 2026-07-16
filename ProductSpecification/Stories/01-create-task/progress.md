@@ -63,8 +63,8 @@
 - [x] red-acceptance
 - [x] design (see ADR: task-creation-persistence-decision.md)
 - [x] red-usecase
-- [~] green-usecase
-- [ ] adapters-discovery
+- [x] green-usecase
+- [~] adapters-discovery
 - [ ] green-acceptance
 
 ### 3.2 Create task with title and description

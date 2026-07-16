@@ -1,11 +1,9 @@
 package com.example.usecase.task.create;
 
 import com.example.usecase.ApplicationTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@Disabled("TDD Red Phase - CreateTaskUseCase.createTask throws UnsupportedOperationException: Not implemented yet")
 @DisplayName("3.1 Create task with title only")
 class CreateTaskWithTitleOnlyUseCaseTest extends ApplicationTest {
 
