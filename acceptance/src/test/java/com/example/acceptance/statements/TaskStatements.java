@@ -3,9 +3,12 @@ package com.example.acceptance.statements;
 import com.example.acceptance.clients.application.ApplicationClient;
 import com.example.acceptance.clients.application.dto.ErrorResponse;
 import com.example.acceptance.clients.application.dto.task.CreateTaskRequest;
+import com.example.acceptance.clients.application.dto.task.TaskResponse;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 import static com.example.acceptance.statements.AssertionHelpers.assertTimestampRecent;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,6 +31,22 @@ public class TaskStatements {
 
     public void whenUserCreatesTaskWithEmptyTitle() {
         lastResponse = applicationClient.createTask(new CreateTaskRequest(""));
+    }
+
+    public void whenUserCreatesTaskWithTitle(String title) {
+        lastResponse = applicationClient.createTask(new CreateTaskRequest(title));
+    }
+
+    public void assertTaskCreatedWithTitleOnly(String expectedTitle) {
+        assertHttpStatus(201);
+        TaskResponse task = lastResponse.as(TaskResponse.class);
+
+        assertThat(task.getId()).as("task id").isNotNull();
+        assertThat(UUID.fromString(task.getId())).as("task id is a UUID").isNotNull();
+        assertThat(task.getTitle()).as("task title").isEqualTo(expectedTitle);
+        assertThat(task.getDescription()).as("task description").isNull();
+        assertThat(task.getPosition()).as("task position").isEqualTo(1);
+        assertTimestampRecent(task.getCreatedAt(), "task creation timestamp");
     }
 
     public void assertValidationError(String expectedMessage) {

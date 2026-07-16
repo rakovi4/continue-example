@@ -60,8 +60,8 @@
 - [x] green-acceptance
 
 ### 3.1 Create task with title only
-- [~] red-acceptance
-- [ ] design
+- [x] red-acceptance
+- [~] design
 - [ ] red-usecase
 - [ ] green-usecase
 - [ ] adapters-discovery
