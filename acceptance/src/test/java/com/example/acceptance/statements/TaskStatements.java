@@ -19,6 +19,11 @@ public class TaskStatements {
 
     private Response lastResponse;
 
+    public String givenTaskExists(String title) {
+        Response response = applicationClient.createTask(new CreateTaskRequest(title));
+        return response.as(TaskResponse.class).getId();
+    }
+
     public void whenUserCreatesTaskWithLongTitle() {
         lastResponse = applicationClient.createTask(new CreateTaskRequest("a".repeat(101)));
     }

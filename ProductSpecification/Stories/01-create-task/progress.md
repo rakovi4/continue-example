@@ -84,12 +84,12 @@
 - [x] green-acceptance
 
 ### 4.1 Get board with tasks in To Do
-- [ ] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [S] design (board GET already returns tasks from scenario 3.1)
+- [x] red-usecase (retroactive: add usecase-level coverage for board GET returning tasks)
+- [S] green-usecase (retroactive: production code already implemented, test green on first run)
+- [S] adapters-discovery (feature fully implemented in 3.1)
+- [x] green-acceptance
 
 ### 4.2 New task appears at bottom of To Do column
 - [ ] red-acceptance
