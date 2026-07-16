@@ -62,6 +62,11 @@ public class TaskStatements {
         assertTimestampRecent(task.getCreatedAt(), "task creation timestamp");
     }
 
+    public String assertTaskCreatedSuccessfully() {
+        assertHttpStatus(201);
+        return lastResponse.as(TaskResponse.class).getId();
+    }
+
     public void assertValidationError(String expectedMessage) {
         assertErrorResponse("VALIDATION_ERROR", expectedMessage);
     }

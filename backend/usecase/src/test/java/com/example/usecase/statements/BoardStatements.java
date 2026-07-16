@@ -66,6 +66,14 @@ public class BoardStatements {
                 .matches("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
     }
 
+    public void assertToDoColumnContainsTasksInOrder(String firstTitle, String secondTitle) {
+        assertOnlyToDoColumnHasTasks();
+        var toDoTasks = boardResult.getColumns().get(0).getTasks();
+        assertThat(toDoTasks).as("To Do tasks").hasSize(2);
+        assertOrderedTask(toDoTasks.get(0), firstTitle, 0);
+        assertOrderedTask(toDoTasks.get(1), secondTitle, 1);
+    }
+
     private void assertSingleTaskInToDo(String expectedTitle) {
         var toDoTasks = boardResult.getColumns().get(0).getTasks();
         assertThat(toDoTasks).as("To Do tasks").hasSize(1);

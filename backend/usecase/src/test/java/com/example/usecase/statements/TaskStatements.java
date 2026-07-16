@@ -58,6 +58,10 @@ public class TaskStatements {
         assertTaskCreated(expectedTitle, "", 0);
     }
 
+    public void assertSecondTaskCreated(String expectedTitle) {
+        assertTaskCreated(expectedTitle, "", 1);
+    }
+
     public void assertTaskCreatedWithTitleAndDescription(String expectedTitle, String expectedDescription) {
         assertTaskCreated(expectedTitle, expectedDescription, 0);
     }

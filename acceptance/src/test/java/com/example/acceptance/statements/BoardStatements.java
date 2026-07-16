@@ -52,6 +52,14 @@ public class BoardStatements {
         assertTimestampRecent(task.getCreatedAt(), "task creation timestamp");
     }
 
+    public void assertToDoContainsTasksInOrder(String firstId, String firstTitle,
+                                                String secondId, String secondTitle) {
+        List<TaskSummaryResponse> tasks = findColumn("To Do").getTasks();
+        assertThat(tasks).as("To Do task count").hasSize(2);
+        assertTaskFields(tasks.get(0), firstId, firstTitle, 0);
+        assertTaskFields(tasks.get(1), secondId, secondTitle, 1);
+    }
+
     public void assertInProgressAndDoneEmpty() {
         ColumnResponse inProgress = findColumn("In Progress");
         ColumnResponse done = findColumn("Done");

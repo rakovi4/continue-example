@@ -92,12 +92,12 @@
 - [x] green-acceptance
 
 ### 4.2 New task appears at bottom of To Do column
-- [ ] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [S] design (feature fully implemented in 3.1 — task ordering by position already works)
+- [x] red-usecase (retroactive: add usecase-level coverage for task ordering by position)
+- [S] green-usecase (retroactive: production code already implemented, test green on first run)
+- [S] adapters-discovery (feature fully implemented in 3.1)
+- [x] green-acceptance
 
 ### 5.1 Reject duplicate task title
 - [ ] red-acceptance
