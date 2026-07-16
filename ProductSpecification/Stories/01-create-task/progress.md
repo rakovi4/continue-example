@@ -60,12 +60,20 @@
 - [x] green-acceptance
 
 ### 3.1 Create task with title only
-- [~] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [x] design (see ADR: task-id-strategy-decision.md)
+- [x] red-usecase
+- [x] green-usecase
+- [x] design (see ADR: board-aggregate-mutation-decision.md — refactor to Board aggregate)
+- [x] refactor-usecase (Board aggregate: eliminate TaskStorage, Board.addTask() owns position + column)
+- [x] red-usecase (coverage: Description rejects null value)
+- [S] green-usecase (coverage: Description rejects null value — production code already handles null, test passes in RED)
+- [x] adapters-discovery (BoardStorage.save replaces TaskStorage)
+- [x] red-adapter storage
+- [x] green-adapter storage
+- [x] red-adapter rest
+- [x] green-adapter rest
+- [x] green-acceptance
 
 ### 3.2 Create task with title and description
 - [ ] red-acceptance

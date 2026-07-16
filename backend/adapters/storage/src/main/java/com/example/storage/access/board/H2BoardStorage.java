@@ -9,6 +9,8 @@ import com.example.storage.repository.TaskJpaRepository;
 import com.example.usecase.board.BoardStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +29,18 @@ public class H2BoardStorage implements BoardStorage {
         var entities = taskJpaRepository.findAll();
         var tasksByColumn = groupByColumn(entities);
         return new Board(buildColumns(tasksByColumn));
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void save(Board board) {
+        board.getColumns().forEach(this::saveColumnTasks);
+    }
+
+    private void saveColumnTasks(Column column) {
+        column.getTasks().forEach(task ->
+                taskJpaRepository.save(TaskEntity.from(task, column.getType()))
+        );
     }
 
     private Map<ColumnType, List<Task>> groupByColumn(List<TaskEntity> entities) {

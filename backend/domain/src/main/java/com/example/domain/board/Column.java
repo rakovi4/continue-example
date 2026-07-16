@@ -1,6 +1,8 @@
 package com.example.domain.board;
 
+import com.example.domain.task.Description;
 import com.example.domain.task.Task;
+import com.example.domain.task.Title;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -20,5 +22,11 @@ public class Column {
 
     public String getName() {
         return type.value();
+    }
+
+    public Task addTask(Title title, Description description) {
+        var task = Task.create(title, description, tasks.size());
+        tasks.add(task);
+        return task;
     }
 }

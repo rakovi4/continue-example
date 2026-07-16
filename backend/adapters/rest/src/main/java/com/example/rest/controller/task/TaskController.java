@@ -1,6 +1,7 @@
 package com.example.rest.controller.task;
 
 import com.example.rest.dto.task.CreateTaskRequestDto;
+import com.example.rest.dto.task.TaskResponseDto;
 import com.example.usecase.task.CreateTaskUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,8 @@ public class TaskController {
 
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTask(@RequestBody CreateTaskRequestDto request) {
-        createTaskUseCase.createTask(request.toUsecaseRequest());
+    public TaskResponseDto createTask(@RequestBody CreateTaskRequestDto request) {
+        var task = createTaskUseCase.createTask(request.toUsecaseRequest());
+        return TaskResponseDto.from(task);
     }
 }

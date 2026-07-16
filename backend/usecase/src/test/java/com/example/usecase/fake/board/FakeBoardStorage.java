@@ -15,4 +15,9 @@ public class FakeBoardStorage implements BoardStorage {
     public Board getBoard() {
         return board;
     }
+
+    @Override
+    public void save(Board board) {
+        this.board = board;
+    }
 }

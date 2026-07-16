@@ -43,7 +43,7 @@ public class ApplicationTest {
 
     private void initUseCases() {
         getBoardUseCase = new GetBoardUseCase(fakeBoardStorage);
-        createTaskUseCase = new CreateTaskUseCase();
+        createTaskUseCase = new CreateTaskUseCase(fakeBoardStorage);
     }
 
     private void initStatements() {
