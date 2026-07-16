@@ -64,7 +64,11 @@
 - [x] design (see ADR: task-creation-persistence-decision.md)
 - [x] red-usecase
 - [x] green-usecase
-- [~] adapters-discovery
+- [x] adapters-discovery (BoardStorage.saveTask stubbed -> storage; controller returns no body -> rest; ValidationException already mapped from 2.1)
+- [~] red-adapter storage
+- [ ] green-adapter storage
+- [ ] red-adapter rest
+- [ ] green-adapter rest
 - [ ] green-acceptance
 
 ### 3.2 Create task with title and description
