@@ -67,6 +67,10 @@ public class TaskStatements {
         return lastResponse.as(TaskResponse.class).getId();
     }
 
+    public void assertDuplicateTitleError() {
+        assertErrorResponse("DUPLICATE_TITLE", "A task with this title already exists");
+    }
+
     public void assertValidationError(String expectedMessage) {
         assertErrorResponse("VALIDATION_ERROR", expectedMessage);
     }
@@ -83,4 +87,5 @@ public class TaskStatements {
     private void assertHttpStatus(int expectedStatus) {
         assertThat(lastResponse.statusCode()).as("HTTP status").isEqualTo(expectedStatus);
     }
+
 }

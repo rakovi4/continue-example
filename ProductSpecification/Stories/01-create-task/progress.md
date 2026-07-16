@@ -100,17 +100,21 @@
 - [x] green-acceptance
 
 ### 5.1 Reject duplicate task title
-- [ ] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [x] design
+- [x] red-usecase
+- [x] green-usecase
+- [x] adapters-discovery (BoardStorage sufficient; DuplicateTitleException unmapped in REST handler)
+- [x] red-adapter rest
+- [x] green-adapter rest
+- [S] red-adapter storage (no new storage port — duplicate check is domain-level)
+- [S] green-adapter storage (no new storage port — duplicate check is domain-level)
+- [x] green-acceptance
 
 ## Frontend Scenarios (02_UI_Tests.md)
 
 ### 1.1 Display empty board with three columns
-- [ ] red-selenium
+- [~] red-selenium
 - [ ] red-frontend
 - [ ] green-frontend
 - [ ] red-frontend-api

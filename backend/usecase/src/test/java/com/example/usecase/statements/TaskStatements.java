@@ -1,5 +1,6 @@
 package com.example.usecase.statements;
 
+import com.example.domain.exception.DuplicateTitleException;
 import com.example.domain.exception.ValidationException;
 import com.example.domain.task.Task;
 import com.example.usecase.task.CreateTaskRequest;
@@ -46,12 +47,26 @@ public class TaskStatements {
         caughtException = catchThrowable(() -> createTaskUseCase.createTask(request));
     }
 
+    public void givenTaskExists(String title) {
+        createTaskUseCase.createTask(new CreateTaskRequest(title));
+    }
+
     public void createTaskWithTitleOnly(String title) {
         createdTask = createTaskUseCase.createTask(new CreateTaskRequest(title));
     }
 
     public void createTaskWithTitleAndDescription(String title, String description) {
         createdTask = createTaskUseCase.createTask(new CreateTaskRequest(title, description));
+    }
+
+    public void createDuplicateTask(String title) {
+        createTaskExpectingError(new CreateTaskRequest(title));
+    }
+
+    public void assertDuplicateTitleError() {
+        assertThat(caughtException)
+                .isInstanceOf(DuplicateTitleException.class)
+                .hasMessage("A task with this title already exists");
     }
 
     public void assertTaskCreatedWithTitleOnly(String expectedTitle) {
