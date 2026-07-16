@@ -65,8 +65,8 @@
 - [x] red-usecase
 - [x] green-usecase
 - [x] adapters-discovery (BoardStorage.saveTask stubbed -> storage; controller returns no body -> rest; ValidationException already mapped from 2.1)
-- [~] red-adapter storage
-- [ ] green-adapter storage
+- [x] red-adapter storage
+- [~] green-adapter storage
 - [ ] red-adapter rest
 - [ ] green-adapter rest
 - [ ] green-acceptance
