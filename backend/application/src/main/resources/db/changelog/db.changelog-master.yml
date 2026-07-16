@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/001-create-tasks-table.yml
+  - include:
+      file: db/changelog/002-drop-tasks-description-not-null.yml

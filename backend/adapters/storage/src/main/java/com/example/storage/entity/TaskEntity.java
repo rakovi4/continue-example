@@ -39,7 +39,7 @@ public class TaskEntity {
         var entity = new TaskEntity();
         entity.id = task.getId();
         entity.title = task.getTitle().getValue();
-        entity.description = task.getDescription().getValue();
+        entity.description = descriptionColumnOf(task.getDescription());
         entity.position = task.getPosition();
         entity.createdAt = task.getCreatedAt();
         entity.columnType = columnType;
@@ -50,9 +50,17 @@ public class TaskEntity {
         return new Task(
                 id,
                 new Title(title),
-                new Description(description),
+                toDescription(),
                 position,
                 createdAt
         );
+    }
+
+    private static String descriptionColumnOf(Description description) {
+        return description == null ? null : description.getValue();
+    }
+
+    private Description toDescription() {
+        return description == null ? null : new Description(description);
     }
 }

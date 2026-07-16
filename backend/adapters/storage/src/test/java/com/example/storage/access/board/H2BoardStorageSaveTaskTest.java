@@ -4,7 +4,6 @@ import com.example.domain.board.ColumnType;
 import com.example.domain.task.Description;
 import com.example.domain.task.Task;
 import com.example.domain.task.Title;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("TDD Red Phase - H2BoardStorage.saveTask throws UnsupportedOperationException: Not implemented yet")
 @DisplayName("3.1 Create task with title only")
 class H2BoardStorageSaveTaskTest extends AbstractBoardStorageTest {
 

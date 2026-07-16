@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-drop-tasks-description-not-null
+      author: system
+      changes:
+        - dropNotNullConstraint:
+            tableName: tasks
+            columnName: description
+            columnDataType: varchar(5000)

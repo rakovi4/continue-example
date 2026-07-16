@@ -31,7 +31,7 @@ public class H2BoardStorage implements BoardStorage {
 
     @Override
     public void saveTask(Task task) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        taskJpaRepository.save(TaskEntity.from(task, ColumnType.TO_DO));
     }
 
     private Map<ColumnType, List<Task>> groupByColumn(List<TaskEntity> entities) {
