@@ -67,8 +67,8 @@
 - [x] adapters-discovery (BoardStorage.saveTask stubbed -> storage; controller returns no body -> rest; ValidationException already mapped from 2.1)
 - [x] red-adapter storage
 - [x] green-adapter storage
-- [~] red-adapter rest
-- [ ] green-adapter rest
+- [x] red-adapter rest
+- [~] green-adapter rest
 - [ ] green-acceptance
 
 ### 3.2 Create task with title and description
