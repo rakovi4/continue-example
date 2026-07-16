@@ -68,8 +68,8 @@
 - [x] red-adapter storage
 - [x] green-adapter storage
 - [x] red-adapter rest
-- [~] green-adapter rest
-- [ ] green-acceptance
+- [x] green-adapter rest
+- [~] green-acceptance
 
 ### 3.2 Create task with title and description
 - [ ] red-acceptance

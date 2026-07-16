@@ -6,7 +6,6 @@ import com.example.rest.RestTest;
 import com.example.usecase.task.CreateTaskRequest;
 import com.example.usecase.task.CreateTaskUseCase;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("3.1 Create task with title only")
-@Disabled("TDD Red Phase - TaskController.createTask returns void, empty body: JSONException Unparsable JSON string")
 @WebMvcTest(TaskController.class)
 class TaskControllerCreateTaskWithTitleTest implements RestTest {
 
