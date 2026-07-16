@@ -35,8 +35,16 @@ public class TaskStatements {
         lastResponse = applicationClient.createTask(new CreateTaskRequest(title));
     }
 
+    public void whenUserCreatesTaskWithTitleAndDescription(String title, String description) {
+        lastResponse = applicationClient.createTask(new CreateTaskRequest(title, description));
+    }
+
     public void assertTaskCreatedWithTitleOnly(String expectedTitle) {
         assertTaskCreated(expectedTitle, "");
+    }
+
+    public void assertTaskCreatedWithTitleAndDescription(String expectedTitle, String expectedDescription) {
+        assertTaskCreated(expectedTitle, expectedDescription);
     }
 
     private void assertTaskCreated(String expectedTitle, String expectedDescription) {

@@ -50,8 +50,16 @@ public class TaskStatements {
         createdTask = createTaskUseCase.createTask(new CreateTaskRequest(title));
     }
 
+    public void createTaskWithTitleAndDescription(String title, String description) {
+        createdTask = createTaskUseCase.createTask(new CreateTaskRequest(title, description));
+    }
+
     public void assertTaskCreatedWithTitleOnly(String expectedTitle) {
         assertTaskCreated(expectedTitle, "", 0);
+    }
+
+    public void assertTaskCreatedWithTitleAndDescription(String expectedTitle, String expectedDescription) {
+        assertTaskCreated(expectedTitle, expectedDescription, 0);
     }
 
     private void assertTaskCreated(String expectedTitle, String expectedDescription, int expectedPosition) {

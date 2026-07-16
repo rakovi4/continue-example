@@ -76,12 +76,12 @@
 - [x] green-acceptance
 
 ### 3.2 Create task with title and description
-- [ ] red-acceptance
-- [ ] design
-- [ ] red-usecase
-- [ ] green-usecase
-- [ ] adapters-discovery
-- [ ] green-acceptance
+- [x] red-acceptance
+- [S] design (feature fully implemented in 3.1 — description already supported)
+- [x] red-usecase (retroactive: add usecase-level coverage for description persistence)
+- [S] green-usecase (retroactive: production code already implemented in 3.1, test green on first run)
+- [S] adapters-discovery (feature fully implemented in 3.1)
+- [x] green-acceptance
 
 ### 4.1 Get board with tasks in To Do
 - [ ] red-acceptance
