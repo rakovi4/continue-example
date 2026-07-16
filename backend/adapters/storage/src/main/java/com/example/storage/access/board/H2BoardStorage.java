@@ -29,6 +29,11 @@ public class H2BoardStorage implements BoardStorage {
         return new Board(buildColumns(tasksByColumn));
     }
 
+    @Override
+    public void saveTask(Task task) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     private Map<ColumnType, List<Task>> groupByColumn(List<TaskEntity> entities) {
         return entities.stream()
                 .collect(Collectors.groupingBy(

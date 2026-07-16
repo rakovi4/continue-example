@@ -7,15 +7,19 @@ import com.example.usecase.board.GetBoardUseCase;
 import com.example.usecase.fake.board.FakeBoardStorage;
 import com.example.usecase.statements.BoardStatements;
 import com.example.usecase.statements.TaskStatements;
+import com.example.usecase.scope.TestData;
 import com.example.usecase.task.CreateTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.time.Clock;
+import java.time.ZoneOffset;
 import java.util.List;
 
 public class ApplicationTest {
 
     // ==================== FAKES ====================
     protected FakeBoardStorage fakeBoardStorage;
+    protected Clock fixedClock;
 
     // ==================== USECASES ====================
     protected GetBoardUseCase getBoardUseCase;
@@ -33,6 +37,7 @@ public class ApplicationTest {
     }
 
     private void initFakes() {
+        fixedClock = Clock.fixed(TestData.NOW, ZoneOffset.UTC);
         fakeBoardStorage = new FakeBoardStorage();
         fakeBoardStorage.setBoard(new Board(List.of(
                 Column.empty(ColumnType.TO_DO),
@@ -43,7 +48,7 @@ public class ApplicationTest {
 
     private void initUseCases() {
         getBoardUseCase = new GetBoardUseCase(fakeBoardStorage);
-        createTaskUseCase = new CreateTaskUseCase();
+        createTaskUseCase = new CreateTaskUseCase(fakeBoardStorage, fixedClock);
     }
 
     private void initStatements() {
