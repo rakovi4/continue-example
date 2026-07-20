@@ -1,0 +1,284 @@
+<title>Backend 3.1 — where the 2h46m went, and what the initiative takes off</title>
+<style>
+  :root {
+    --ink:#12181b; --ink-2:#3d4c52; --ink-3:#6d7f86; --rule:#dbe3e5;
+    --ground:#f6f8f8; --panel:#ffffff; --accent:#0e7c86;
+    --spine:#0e7c86; --gates:#7c8f99; --passes:#8a6fb0; --refactor:#b0812a; --void:#b9c4c7;
+    --red:#b6412f; --green:#2f7a4a; --neutral:#7c8f99; --saved:#0e7c86;
+    --shadow: 0 1px 2px rgba(18,24,27,.05), 0 8px 24px -12px rgba(18,24,27,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink:#e8eff0; --ink-2:#a8bac0; --ink-3:#71858c; --rule:#26333a;
+      --ground:#0d1417; --panel:#131d21; --accent:#35b3bd;
+      --spine:#35b3bd; --gates:#6d8590; --passes:#a68bcc; --refactor:#cfa04a; --void:#3a4a51;
+      --red:#e0705c; --green:#5fb37f; --neutral:#6d8590; --saved:#35b3bd;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --ink:#12181b; --ink-2:#3d4c52; --ink-3:#6d7f86; --rule:#dbe3e5;
+    --ground:#f6f8f8; --panel:#ffffff; --accent:#0e7c86;
+    --spine:#0e7c86; --gates:#7c8f99; --passes:#8a6fb0; --refactor:#b0812a; --void:#b9c4c7;
+    --red:#b6412f; --green:#2f7a4a; --neutral:#7c8f99; --saved:#0e7c86;
+    --shadow: 0 1px 2px rgba(18,24,27,.05), 0 8px 24px -12px rgba(18,24,27,.18);
+  }
+  :root[data-theme="dark"] {
+    --ink:#e8eff0; --ink-2:#a8bac0; --ink-3:#71858c; --rule:#26333a;
+    --ground:#0d1417; --panel:#131d21; --accent:#35b3bd;
+    --spine:#35b3bd; --gates:#6d8590; --passes:#a68bcc; --refactor:#cfa04a; --void:#3a4a51;
+    --red:#e0705c; --green:#5fb37f; --neutral:#6d8590; --saved:#35b3bd;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-size:15px; line-height:1.55;
+    font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1080px; margin:0 auto; padding:56px 28px 80px; display:flex; flex-direction:column; gap:52px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .eyebrow { font-family: ui-monospace, Menlo, monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-3); }
+  h1 { font-size:clamp(30px,4.4vw,44px); line-height:1.08; letter-spacing:-.024em; margin:10px 0 0;
+    text-wrap:balance; font-weight:640; }
+  .dek { margin:14px 0 0; max-width:64ch; color:var(--ink-2); font-size:17px; }
+  h2 { font-size:13px; font-family: ui-monospace, Menlo, monospace; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; font-weight:600; }
+  .sec-note { margin:0 0 20px; color:var(--ink-2); max-width:68ch; }
+  section { display:flex; flex-direction:column; }
+  .headline { background:var(--panel); border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow);
+    padding:26px 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:26px; }
+  .stat .k { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+    font-family: ui-monospace, Menlo, monospace; }
+  .stat .v { font-size:30px; font-weight:650; letter-spacing:-.02em; margin-top:4px; font-variant-numeric:tabular-nums; }
+  .stat .v.hero { color:var(--accent); }
+  .stat .s { font-size:13px; color:var(--ink-2); margin-top:2px; }
+  .stack { display:flex; width:100%; height:58px; border-radius:2px; overflow:hidden; border:1px solid var(--rule); }
+  .stack > div { display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600;
+    font-family: ui-monospace, Menlo, monospace; font-size:12px; font-variant-numeric:tabular-nums; }
+  .legend { display:flex; flex-wrap:wrap; gap:18px 26px; margin-top:16px; }
+  .legend div { display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--ink-2); }
+  .sw { width:10px; height:10px; border-radius:2px; flex:none; }
+  .chart { background:var(--panel); border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow);
+    padding:24px 26px 18px; overflow-x:auto; }
+  .rows { display:flex; flex-direction:column; gap:9px; min-width:620px; }
+  .row { display:grid; grid-template-columns:152px 1fr 78px; align-items:center; gap:14px; }
+  .lab { display:flex; align-items:baseline; gap:8px; min-width:0; }
+  .wu { font-family: ui-monospace, Menlo, monospace; font-size:11px; color:var(--ink-3); flex:none; }
+  .step { font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .track { position:relative; height:22px; background:linear-gradient(var(--rule),var(--rule)) no-repeat center/100% 1px; }
+  .bar { position:absolute; inset:0 auto 0 0; height:22px; border-radius:2px; display:flex; }
+  .bar .seg { height:100%; }
+  .bar .seg.solid { background:var(--accent); border-radius:2px 0 0 2px; }
+  .bar .seg.dirty { border-radius:0 2px 2px 0; border:1px dashed var(--void); border-left:0;
+    background-image:repeating-linear-gradient(45deg,var(--void) 0 4px,transparent 4px 8px); }
+  .bar.est { background:transparent; border:1px dashed var(--void); border-radius:2px; }
+  .bar.est .seg { width:100%; opacity:.7; border-radius:2px;
+    background-image:repeating-linear-gradient(45deg,var(--void) 0 4px,transparent 4px 8px); }
+  .bar.tiny .seg.solid { background:var(--ink-3); }
+  .bar.off .seg.solid { background:var(--void); }
+  .val { font-family: ui-monospace, Menlo, monospace; font-size:12px; font-variant-numeric:tabular-nums;
+    text-align:right; color:var(--ink-2); }
+  .val b { color:var(--ink); font-weight:600; }
+  .phase { width:3px; height:20px; border-radius:2px; flex:none; }
+  .p-red { background:var(--red); } .p-green { background:var(--green); } .p-other { background:var(--neutral); }
+  .axis { display:flex; justify-content:space-between; margin:14px 0 0; padding-top:8px;
+    border-top:1px solid var(--rule); min-width:620px; }
+  .axis span { font-family: ui-monospace, Menlo, monospace; font-size:10px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; }
+  .skipped .step, .skipped .val { color:var(--ink-3); font-style:italic; }
+  .notes { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:16px; }
+  .note { background:var(--panel); border:1px solid var(--rule); border-left:2px solid var(--accent);
+    border-radius:2px; padding:16px 18px; }
+  .note h3 { margin:0 0 6px; font-size:14px; font-weight:640; letter-spacing:-.01em; }
+  .note p { margin:0; font-size:13.5px; color:var(--ink-2); line-height:1.5; }
+  .note.warn { border-left-color:var(--refactor); }
+  .tw { overflow-x:auto; background:var(--panel); border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); }
+  table { border-collapse:collapse; width:100%; font-size:13.5px; min-width:500px; }
+  th { text-align:left; font-family: ui-monospace, Menlo, monospace; font-size:10.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--ink-3); font-weight:600; padding:12px 16px;
+    border-bottom:1px solid var(--rule); white-space:nowrap; }
+  td { padding:10px 16px; border-bottom:1px solid var(--rule); vertical-align:middle; }
+  tr:last-child td { border-bottom:0; }
+  td.n { font-family: ui-monospace, Menlo, monospace; font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
+  .zero { color:var(--green); font-weight:650; } .full { color:var(--refactor); font-weight:650; }
+  .dash { color:var(--ink-3); } .cut { color:var(--saved); font-weight:650; }
+  tr.total td { background:color-mix(in srgb, var(--accent) 7%, transparent); font-weight:600; }
+  footer { border-top:1px solid var(--rule); padding-top:20px; color:var(--ink-3); font-size:12.5px; }
+  footer code { font-family: ui-monospace, Menlo, monospace; color:var(--ink-2); }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Task 8 · D4/D9 ceiling run · gated arm · fixture <span class="mono">63ef226</span></div>
+    <h1>One backend scenario, end to end: 2h46m of machine time</h1>
+    <p class="dek">Scenario 3.1 “Create task with title only”, run to completion with every gate and review pass
+      included. Twelve work units, 89 tracked agents, 5/5 acceptance green. This is where the time actually went —
+      and what the speed-up initiative can take off it.</p>
+  </header>
+
+  <section>
+    <div class="headline">
+      <div class="stat"><div class="k">Scenario wall</div><div class="v">~9960s</div>
+        <div class="s">~2h46m · WU2–WU12 measured 9044s, WU1 reconstructed</div></div>
+      <div class="stat"><div class="k">Agent work</div><div class="v">17402.5s</div>
+        <div class="s">89 tracked agents · 4.8h of work in 2.8h of wall</div></div>
+      <div class="stat"><div class="k">The spine</div><div class="v hero">17.4%</div>
+        <div class="s">red + green + hazard-scan — all T2/T3/T5 restructure</div></div>
+      <div class="stat"><div class="k">green-agent alone</div><div class="v">2.2%</div>
+        <div class="s">385.1s — the agent that writes production code, 3×</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where the 17402.5s of agent work went</h2>
+    <p class="sec-note">Four layers. The spine — the only part the speed-up tasks restructure — is the smallest.
+      The two review passes alone cost <b>12.6× more than every green phase combined</b>.</p>
+    <div class="stack">
+      <div style="width:17.4%;background:var(--spine)">17.4%</div>
+      <div style="width:24.3%;background:var(--gates)">24.3%</div>
+      <div style="width:27.8%;background:var(--passes)">27.8%</div>
+      <div style="width:28.8%;background:var(--refactor)">28.8%</div>
+    </div>
+    <div class="legend">
+      <div><span class="sw" style="background:var(--spine)"></span><span><b>Spine</b> 3029.4s — red, green, hazard-scan</span></div>
+      <div><span class="sw" style="background:var(--gates)"></span><span><b>Gates</b> 4224.0s — /test-review, /test-coverage</span></div>
+      <div><span class="sw" style="background:var(--passes)"></span><span><b>Review passes</b> 4838.8s — agent-review, premortem</span></div>
+      <div><span class="sw" style="background:var(--refactor)"></span><span><b>/refactor</b> 5007.2s — incl. detectors</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Per-work-unit wall time</h2>
+    <p class="sec-note">Window = first agent dispatch → the unit’s final commit. Human wall-clock excluded per D4.
+      Left stripe marks the phase: <span style="color:var(--red)">red</span>,
+      <span style="color:var(--green)">green</span>, or neither. Note how flat it is — every unit lands in a
+      780–1200s band almost regardless of what it does.</p>
+    <div class="chart">
+      <div class="rows">
+        <div class="row"><div class="lab"><span class="phase p-red"></span><span class="wu">WU1</span><span class="step">red-acceptance</span></div>
+          <div class="track"><div class="bar est" style="width:100%"><div class="seg"></div></div></div><div class="val"><b>~1400s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-other"></span><span class="wu">WU2</span><span class="step">design</span></div>
+          <div class="track"><div class="bar" style="width:80.2%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>1123s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-red"></span><span class="wu">WU3</span><span class="step">red-usecase</span></div>
+          <div class="track"><div class="bar" style="width:72.6%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>1016s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-green"></span><span class="wu">WU4</span><span class="step">green-usecase</span></div>
+          <div class="track"><div class="bar" style="width:56.9%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>796s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-red"></span><span class="wu">WU5</span><span class="step">red-usecase (coverage)</span></div>
+          <div class="track"><div class="bar" style="width:64.1%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>897s</b></div></div>
+        <div class="row skipped"><div class="lab"><span class="phase p-green" style="opacity:.35"></span><span class="wu">WU6</span><span class="step">green-usecase (coverage)</span></div>
+          <div class="track"></div><div class="val">skipped</div></div>
+        <div class="row"><div class="lab"><span class="phase p-other"></span><span class="wu">WU7</span><span class="step">adapters-discovery</span></div>
+          <div class="track"><div class="bar tiny" style="width:6.1%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>85s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-red"></span><span class="wu">WU8</span><span class="step">red-adapter storage</span></div>
+          <div class="track"><div class="bar" style="width:84.6%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>1185s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-green"></span><span class="wu">WU9</span><span class="step">green-adapter storage</span></div>
+          <div class="track"><div class="bar" style="width:60.1%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>841s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-red"></span><span class="wu">WU10</span><span class="step">red-adapter rest</span></div>
+          <div class="track"><div class="bar" style="width:76.3%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>1068s</b></div></div>
+        <div class="row"><div class="lab"><span class="phase p-green"></span><span class="wu">WU11</span><span class="step">green-adapter rest</span></div>
+          <div class="track"><div class="bar" style="width:89.3%"><div class="seg solid" style="width:61.3%"></div><div class="seg dirty" style="width:38.7%"></div></div></div>
+          <div class="val"><b>766s</b> +484</div></div>
+        <div class="row"><div class="lab"><span class="phase p-green"></span><span class="wu">WU12</span><span class="step">green-acceptance</span></div>
+          <div class="track"><div class="bar" style="width:55.9%"><div class="seg solid" style="width:100%"></div></div></div><div class="val"><b>783s</b></div></div>
+      </div>
+      <div class="axis"><span>0</span><span>350s</span><span>700s</span><span>1050s</span><span>1400s</span></div>
+    </div>
+    <div class="legend" style="margin-top:14px">
+      <div><span class="sw" style="background:var(--accent)"></span><span>measured wall</span></div>
+      <div><span class="sw" style="background-image:repeating-linear-gradient(45deg,var(--void) 0 3px,transparent 3px 6px);border:1px dashed var(--void)"></span>
+        <span>not clean — WU11’s 484s compaction; WU1’s reconstructed estimate</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Four things the run settles</h2>
+    <div class="notes">
+      <div class="note"><h3>The spine is not where the time is</h3>
+        <p>17.4% of agent work, and <b>green-agent is 2.2%</b>. Even a perfect spine — zero seconds —
+          leaves 82.6% of the run standing.</p></div>
+      <div class="note"><h3>The passes cost only what they fail to overlap</h3>
+        <p>Settled at n=6. Behind a working <span class="mono">/refactor</span>: <b>0–103s</b>. With nothing
+          to hide behind: <b>~330s</b>. Only <span class="mono">design</span> and
+          <span class="mono">green-acceptance</span> pay full price.</p></div>
+      <div class="note warn"><h3>T3 is aimed at the wrong variable</h3>
+        <p>WU11’s compaction was an accidental controlled experiment: dispatch stagger tracks the
+          <b>caller’s context size</b>, not prompt length. T3 proposes a prompt-length fix.</p></div>
+      <div class="note"><h3>A gate restructured half the run for 85 seconds</h3>
+        <p><span class="mono">adapters-discovery</span> dispatched <b>zero agents</b>, cost 1.4 minutes, and
+          scheduled 48% of the remaining scenario. Gates aren’t expensive — fleets are.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The overlap rule — review passes’ marginal cost, n=6</h2>
+    <p class="sec-note">The passes are not expensive. They are expensive <em>when nothing overlaps them</em>.
+      This is why T6’s lever is the batch, not the passes.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Unit</th><th>Step</th><th style="text-align:right">/refactor</th><th style="text-align:right">Passes cost</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">WU2</td><td>design</td><td class="n dash">none</td><td class="n full">338.8s</td><td>pure serial tail</td></tr>
+        <tr><td class="mono">WU3</td><td>red-usecase</td><td class="n">284.9s <span class="dash">(no action)</span></td><td class="n">51.3s</td><td>barely outlasts premortem</td></tr>
+        <tr><td class="mono">WU4</td><td>green-usecase</td><td class="n">384.7s</td><td class="n">10.4s</td><td>long enough to swallow both</td></tr>
+        <tr><td class="mono">WU5</td><td>red-usecase (cov)</td><td class="n">254.8s <span class="dash">(no action)</span></td><td class="n zero">0s</td><td>refactor returned last</td></tr>
+        <tr><td class="mono">WU8</td><td>red-adapter storage</td><td class="n">328.0s</td><td class="n">102.8s</td><td>premortem (402.5s) overran it</td></tr>
+        <tr><td class="mono">WU9</td><td>green-adapter storage</td><td class="n">487.0s</td><td class="n zero">0s</td><td>refactor returned last</td></tr>
+        <tr><td class="mono">WU12</td><td>green-acceptance</td><td class="n dash">none</td><td class="n full">314.2s</td><td>pure serial tail — within 8% of WU2</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Projection — what the initiative takes off this scenario</h2>
+    <p class="sec-note"><b>This is a model, not a measurement.</b> It applies each task’s stated scope to the
+      measured unit walls above and takes the resulting critical path. Every input is real; the composition is
+      arithmetic on a graph nobody has run yet. The new-arm ceiling run is what settles it.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Lever</th><th>Task</th><th style="text-align:right">Wall off</th><th style="text-align:right">Running</th><th>Why that number</th></tr></thead>
+      <tbody>
+        <tr><td colspan="3"><b>Measured serial baseline</b></td><td class="n"><b>9960s</b></td><td class="dash">2h46m, 11 units end to end</td></tr>
+        <tr><td>Backend dependency graph + coverage off-path</td><td class="mono">10, 12</td><td class="n cut">−4131s</td><td class="n">5829s</td>
+          <td>red-acceptance floats; adapter pairs run ∥; coverage leaves the path</td></tr>
+        <tr><td>Detach the non-gating passes</td><td class="mono">13</td><td class="n cut">−818s</td><td class="n">5011s</td>
+          <td>sum of on-path marginal cost from the n=6 table</td></tr>
+        <tr><td>Warm stack reuse</td><td class="mono">18</td><td class="n cut">−150s</td><td class="n">4861s</td>
+          <td>only <span class="mono">green-acceptance</span> starts a backend on the path</td></tr>
+        <tr><td>Stage boundaries 11 → 3</td><td class="mono">9</td><td class="n dash">~−200s</td><td class="n dash">—</td>
+          <td>preamble is ~25s/invocation and sits <em>outside</em> the measured window</td></tr>
+        <tr><td>Refactor-batch dispatch wording</td><td class="mono">17</td><td class="n dash">0s</td><td class="n dash">—</td>
+          <td>this run’s batch already ran concurrent (3.51×) — insurance, not speed-up</td></tr>
+        <tr><td>Auto-apply review concerns</td><td class="mono">14</td><td class="n dash">0s</td><td class="n dash">—</td>
+          <td>human round-trips, which D4 excludes by construction</td></tr>
+        <tr class="total"><td colspan="2"><b>Modelled new critical path</b></td><td class="n cut"><b>−5099s</b></td><td class="n"><b>~4861s</b></td>
+          <td><b>~1h21m — a 2.05× speed-up, ~85 min off each backend scenario</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="notes" style="margin-top:24px">
+      <div class="note"><h3>Task 10 is 81% of the win</h3>
+        <p>4131s of the 5099s. Everything else on that table is rounding — and Task 10 is the one thing
+          the two blocked ADR decisions in Task 9 sit in front of.</p></div>
+      <div class="note warn"><h3>D9’s projection is optimistic on both ends</h3>
+        <p>It projected old <b>97m</b> / new <b>36m</b> = 2.7×. Measured old is <b>166m</b> — 1.7× worse than
+          projected. Modelled new is <b>81m</b>. The real ratio is nearer <b>2.0×</b>.</p></div>
+      <div class="note warn"><h3>The floor nobody is attacking</h3>
+        <p>The new path is still <b>7 units deep at ~900s each</b>. No task in T1–T9 makes a single unit cheaper —
+          they only take units <em>off</em> the path. Past ~2× that floor is the whole game.</p></div>
+      <div class="note warn"><h3>Half the initiative is unmeasured</h3>
+        <p>This covers backend scenarios only. <b>T4 (Task 11, frontend chains) has no baseline</b> — the
+          frontend ceiling run is still open. Its impact is a guess.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Source: <code>ProductSpecification/tasks/8-refactoring-agent-timing-benchmark/ceiling-runs/</code> —
+      <code>backend-3.1-gated-run-summary.md</code> and its eleven per-unit siblings.
+      Run branch <code>benchmark/ceiling-old-3.1-gated</code>, 16 commits <code>17f97b4</code>..<code>0928513</code>,
+      13:08:00Z→17:30:14Z on 2026-07-16. Task scopes from
+      <code>ProductSpecification/framework-speedup/README.md</code>.</p>
+    <p><b>Known limitations, carried not hidden.</b> 6 untracked <code>SubagentStop</code>s fall inside the
+      WU5/WU11/WU12 windows, so busy totals under-count — this cuts <em>against</em> the spine, making 17.4% an
+      over-estimate if anything. WU1 is reconstructed, not measured. Every timing here is a workaround’s timing:
+      <code>/test-acceptance</code> was unusable on this host, which is Task 18 Step 0’s subject. The projection
+      section is arithmetic on the measured walls, not a run.</p>
+  </footer>
+
+</div>

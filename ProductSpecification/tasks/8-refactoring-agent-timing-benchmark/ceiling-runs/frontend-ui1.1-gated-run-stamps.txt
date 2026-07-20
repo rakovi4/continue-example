@@ -1,0 +1,18 @@
+RUN_START=2026-07-16T18:19:12Z
+2026-07-16T18:19:12Z WU1 red-selenium DISPATCH
+2026-07-16T18:26:58Z WU1 red-agent RETURNED, /test-review DISPATCH
+2026-07-16T18:32:30Z WU1 /test-review RETURNED (pass, 4 fixed)
+2026-07-16T18:33:17Z WU1 behavior commit 07f5902; REFACTOR BATCH DISPATCH (3 agents)
+2026-07-16T18:37:39Z WU1 refactor batch RETURNED (refactor 229.0s, agent-review 185.1s, premortem 169.0s)
+WU2 red-frontend  RUN_START=2026-07-16T18:44:28Z  load=1.37/12  red-agent dispatched 18:45:53Z
+2026-07-16T19:00:58Z WU2 COMPLETE — behavior 16ad13a, refactor 93d95e7 (red-agent 179.7s, test-review 386.0s, refactor 253.7s, agent-review 171.5s, premortem 175.1s; passes 0s marginal)
+2026-07-16T19:00:58Z WU3 green-frontend DISPATCH
+2026-07-16T19:24:54Z WU4 COMPLETE — behavior 7ca9ca4, refactor ff99ee9 (red 215.6s, test-review 365.9s, refactor 319.5s, agent-review 224.0s, premortem 261.3s; 0s marginal)
+2026-07-16T19:31:23Z WU5 COMPLETE — behavior bafe3eb, NO refactor commit (refactor: no changes). green 75.1s, refactor 94.0s, agent-review 155.3s, premortem 215.4s; marginal +121.4s
+2026-07-16T19:31:23Z WU6 align-design DISPATCH
+2026-07-16T20:30Z WU6 COMPLETE — behavior 4787e30, NO refactor commit (refactor: no changes)
+  align+build 422.8s, design-review 87.7s, test-coverage 172.0s, refactor 91.9s, agent-review 200.9s, premortem 222.3s; marginal +130.4s
+  CAVEAT: /align-design verify-only SKIPPED — /refactor produced zero changes, so the tree is byte-identical to
+  4787e30, which the align pass already verified at 61/64 computed properties. Re-running would cost ~400s for zero
+  information. This UNDER-measures the old arm (biases against the initiative, same direction as host contention).
+2026-07-16T19:49:43Z WU7 green-selenium DISPATCH — service-touching

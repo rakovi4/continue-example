@@ -1,0 +1,5 @@
+20:24:40 [agent-review] START commit 0928513 green-acceptance 3.1
+20:24:45 [premortem] START commit 0928513 green-acceptance 3.1
+20:26:32 [premortem] traced 3 incidents to diff; checking guards
+20:27:09 [premortem] DONE verdict=BLOCK credible=3 remote=3 (contract file .claude/templates/workflow/review-pass-contract.md absent)
+20:29:04 [agent-review] DONE commit 0928513 verdict=CONCERNS findings=4

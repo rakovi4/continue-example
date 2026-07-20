@@ -1,0 +1,6 @@
+{"ts":"2026-07-16T10:52:13.251Z","event":"subagent_stop","session_id":"5b56b36a-6d9a-449e-92bd-42e19bd9be2d","tool_use_id":"","agent_id":"a0cb5de96250a5c30","caller_id":"","agent_type":"","description":""}
+{"ts":"2026-07-16T10:58:35.472Z","event":"subagent_stop","session_id":"5b56b36a-6d9a-449e-92bd-42e19bd9be2d","tool_use_id":"","agent_id":"ab5c5ada096b2d9a7","caller_id":"","agent_type":"","description":""}
+{"ts":"2026-07-16T11:07:16.135Z","event":"subagent_stop","session_id":"5b56b36a-6d9a-449e-92bd-42e19bd9be2d","tool_use_id":"","agent_id":"aff0af88edfc12bdf","caller_id":"","agent_type":"","description":""}
+{"ts":"2026-07-16T11:22:22.790Z","event":"subagent_stop","session_id":"5b56b36a-6d9a-449e-92bd-42e19bd9be2d","tool_use_id":"","agent_id":"a2e2cc6391a12d947","caller_id":"","agent_type":"","description":""}
+{"ts":"2026-07-16T12:50:37.500Z","event":"subagent_stop","session_id":"5b56b36a-6d9a-449e-92bd-42e19bd9be2d","tool_use_id":"","agent_id":"a278cc252bd6d1ecc","caller_id":"","agent_type":"","description":""}
+{"ts":"2026-07-16T12:53:18.854Z","event":"subagent_stop","session_id":"5b56b36a-6d9a-449e-92bd-42e19bd9be2d","tool_use_id":"","agent_id":"a56030edeb393ca09","caller_id":"","agent_type":"","description":""}

@@ -1,0 +1,48 @@
+Agent time-budget — session af518fbd-1aec-43ec-8872-580c0cafc4a9 (12 step(s))
+
+Step 1: 2026-07-16T05:53:16.775Z -> 2026-07-16T05:53:21.611Z   wall=4.8s  busy=4.8s  overlap_saved=0s  serial_tail=0s
+  - claude  4.8s  Hook liveness probe
+
+Step 2: 2026-07-16T05:58:20.779Z -> 2026-07-16T06:05:57.160Z   wall=456.4s  busy=456.4s  overlap_saved=0s  serial_tail=0s
+  - red-agent  456.4s  red-acceptance 3.1 (ceiling)
+
+Step 3: 2026-07-16T06:07:11.909Z -> 2026-07-16T06:10:33.013Z   wall=201.1s  busy=992s  overlap_saved=790.9s  serial_tail=20.2s
+  - hazard-scan-agent  146.2s  hazard scan G1 money/numbers
+  - hazard-scan-agent  104.3s  hazard scan G2 rerun/atomicity
+  - hazard-scan-agent  111.6s  hazard scan G3 concurrency
+  - hazard-scan-agent  180.9s  hazard scan G4 lifecycle/schema
+  - hazard-scan-agent  144.1s  hazard scan G5 request boundary
+  - hazard-scan-agent  125.5s  hazard scan G6 scale/limits
+  - hazard-scan-agent  116.4s  hazard scan G7 time/operability
+  - hazard-scan-agent  63s  hazard scan G8 client/frontend
+
+Step 4: 2026-07-16T06:13:21.026Z -> 2026-07-16T06:19:19.666Z   wall=358.6s  busy=358.6s  overlap_saved=0s  serial_tail=0s
+  - red-agent  358.6s  red-usecase 3.1 (ceiling)
+
+Step 5: 2026-07-16T06:19:44.437Z -> 2026-07-16T06:23:09.470Z   wall=205s  busy=205s  overlap_saved=0s  serial_tail=0s
+  - green-agent  205s  green-usecase 3.1 (ceiling)
+
+Step 6: 2026-07-16T06:24:04.214Z -> 2026-07-16T06:28:49.993Z   wall=285.8s  busy=285.8s  overlap_saved=0s  serial_tail=0s
+  - coverage-agent  285.8s  test-coverage usecase (ceiling)
+
+Step 7: 2026-07-16T06:29:41.948Z -> 2026-07-16T06:33:36.519Z   wall=234.6s  busy=234.6s  overlap_saved=0s  serial_tail=0s
+  - red-agent  234.6s  red-adapter storage 3.1 (ceiling)
+
+Step 8: 2026-07-16T06:34:08.672Z -> 2026-07-16T06:36:16.843Z   wall=128.2s  busy=128.2s  overlap_saved=0s  serial_tail=0s
+  - green-agent  128.2s  green-adapter storage 3.1 (ceiling)
+
+Step 9: 2026-07-16T06:36:44.387Z -> 2026-07-16T06:39:20.930Z   wall=156.5s  busy=156.5s  overlap_saved=0s  serial_tail=0s
+  - coverage-agent  156.5s  test-coverage storage (ceiling)
+
+Step 10: 2026-07-16T06:39:38.539Z -> 2026-07-16T06:43:09.495Z   wall=211s  busy=211s  overlap_saved=0s  serial_tail=0s
+  - red-agent  211s  red-adapter rest 3.1 (ceiling)
+
+Step 11: 2026-07-16T06:43:39.085Z -> 2026-07-16T06:46:16.803Z   wall=157.7s  busy=157.7s  overlap_saved=0s  serial_tail=0s
+  - green-agent  157.7s  green-adapter rest 3.1 (ceiling)
+
+Step 12: 2026-07-16T06:46:43.169Z -> 2026-07-16T06:47:55.758Z   wall=72.6s  busy=72.6s  overlap_saved=0s  serial_tail=0s
+  - coverage-agent  72.6s  test-coverage rest (ceiling)
+
+Untracked stops (spawn paths SubagentStart never recorded — excluded from every step; busy totals under-count them):
+  - agent_id=aeae5aa5b21bda6cf ts=2026-07-16T05:46:22.432Z
+  - agent_id=ac21d6b328a4475a0 ts=2026-07-16T05:48:40.143Z

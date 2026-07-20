@@ -1,0 +1,76 @@
+dispatched: 40 | matched stop: 40 | untracked: 0
+window: 18:45:47Z -> 19:53:01Z
+wall: 4034.5s (67.2 min)
+agent work: 6745.0s (112.4 min) | concurrency 1.67x
+
+agent_type                       n    busy_s
+premortem-agent                  5    1102.4
+refactor-agent                   5     952.1
+agent-review-agent               5     878.5
+green-agent                      4     756.0
+test-review-agent                2     751.9
+red-agent                        2     395.3
+test-review-statements-agent     2     322.4
+refactor-design-agent            3     318.8
+test-review-placement-agent      2     313.1
+refactor-mechanics-agent         3     291.3
+refactor-duplication-agent       3     220.7
+test-review-assertions-agent     2     182.7
+coverage-agent                   1     172.0
+design-review-agent              1      87.7
+
+layer           busy_s    share
+spine           1151.3    17.1%
+gates           1829.8    27.1%
+passes          1980.8    29.4%
+refactor        1783.0    26.4%
+
+--- fan-out stagger (gaps < 60s) ---
+MAIN(orchestrator)  n=25  mean-gap  15.0s  [14.9, 12.6, 14.4, 13.8, 15.3, 14.8]
+sub a00faf1af       n= 3  mean-gap   9.7s  [8.8, 10.7]
+sub add959fb7       n= 3  mean-gap   6.4s  [6.4, 6.5]
+sub aa25bdadf       n= 3  mean-gap   6.3s  [5.6, 6.9]
+sub a67390928       n= 3  mean-gap  10.0s  [10.0, 10.0]
+sub af9d0b30c       n= 3  mean-gap   7.9s  [7.5, 8.3]
+
+--- per agent (chronological) ---
+  18:45:47  red-agent                      179.7s  red-frontend WU2 board logic
+  18:49:11  test-review-agent              386.0s  test-review WU2 frontend logic
+  18:49:39  test-review-assertions-agent    74.5s  Cluster A assertions scan
+  18:49:48  test-review-placement-agent    103.1s  Cluster P placement scan
+  18:49:58  test-review-statements-agent   220.6s  Cluster S statements-quality scan
+  18:56:21  refactor-agent                 253.7s  refactor WU2
+  18:56:36  agent-review-agent             171.5s  agent-review WU2
+  18:56:49  premortem-agent                175.1s  premortem WU2
+  18:57:06  refactor-mechanics-agent       107.5s  Scan mechanics smells
+  18:57:12  refactor-design-agent           93.6s  Scan design smells
+  18:57:18  refactor-duplication-agent      66.0s  Scan duplication smells
+  19:01:17  green-agent                     91.2s  green-frontend WU3
+  19:03:24  refactor-agent                 193.0s  refactor WU3
+  19:03:39  agent-review-agent             126.8s  agent-review WU3
+  19:03:53  premortem-agent                228.4s  premortem WU3
+  19:03:56  refactor-mechanics-agent        82.2s  Mechanics scan board logic
+  19:04:01  refactor-design-agent           74.2s  Design scan board logic
+  19:04:08  refactor-duplication-agent      75.4s  Duplication scan board logic
+  19:08:29  red-agent                      215.6s  red-frontend-api WU4
+  19:12:28  test-review-agent              365.9s  test-review WU4 board api
+  19:12:50  test-review-assertions-agent   108.2s  Cluster A assertions scan
+  19:13:00  test-review-placement-agent    210.1s  Cluster P placement scan
+  19:13:10  test-review-statements-agent   101.8s  Cluster S quality scan
+  19:19:15  refactor-agent                 319.5s  refactor WU4
+  19:19:30  agent-review-agent             224.0s  agent-review WU4
+  19:19:42  refactor-mechanics-agent       101.6s  Mechanics smell scan
+  19:19:45  premortem-agent                261.2s  premortem WU4
+  19:19:50  refactor-design-agent          151.0s  Design smell scan
+  19:19:58  refactor-duplication-agent      79.3s  Duplication and test-DSL scan
+  19:25:14  green-agent                     75.1s  green-frontend-api WU5
+  19:27:05  refactor-agent                  94.0s  refactor WU5
+  19:27:20  agent-review-agent             155.3s  agent-review WU5
+  19:27:35  premortem-agent                215.4s  premortem WU5
+  19:32:02  green-agent                    422.8s  align-design WU6 board component
+  19:39:29  design-review-agent             87.7s  design-review WU6
+  19:41:19  coverage-agent                 172.0s  test-coverage WU6 frontend
+  19:45:04  refactor-agent                  91.9s  refactor WU6
+  19:45:21  agent-review-agent             200.9s  agent-review WU6
+  19:45:39  premortem-agent                222.3s  premortem WU6
+  19:50:14  green-agent                    166.9s  green-selenium WU7

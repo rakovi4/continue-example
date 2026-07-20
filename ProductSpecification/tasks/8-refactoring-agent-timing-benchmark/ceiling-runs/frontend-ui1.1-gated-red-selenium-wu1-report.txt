@@ -1,0 +1,19 @@
+Agent time-budget — session 28544eed-4ba3-423c-9944-3c2dee8b6d09 (3 step(s))
+
+Step 1: 2026-07-16T18:19:36.450Z -> 2026-07-16T18:26:48.820Z   wall=432.4s  busy=432.4s  overlap_saved=0s  serial_tail=0s
+  - red-agent  432.4s  red-selenium UI 1.1 ceiling run
+
+Step 2: 2026-07-16T18:27:10.266Z -> 2026-07-16T18:32:12.632Z   wall=302.4s  busy=594s  overlap_saved=291.7s  serial_tail=0s
+  - test-review-agent  302.4s  test-review red-selenium UI 1.1
+  - test-review-assertions-agent  94.1s  Cluster A assertions scan
+  - test-review-placement-agent  78.9s  Cluster P placement scan
+  - test-review-statements-agent  75.8s  Cluster S statements scan
+  - test-review-selenium-agent  42.9s  Cluster Se selenium scan
+
+Step 3: 2026-07-16T18:33:29.795Z -> 2026-07-16T18:37:18.730Z   wall=228.9s  busy=878.6s  overlap_saved=649.6s  serial_tail=0s
+  - refactor-agent  228.9s  refactor red-selenium WU1
+  - agent-review-agent  185.1s  agent-review WU1 red-selenium
+  - premortem-agent  169s  premortem WU1 red-selenium
+  - refactor-mechanics-agent  110.6s  Cluster M mechanics scan
+  - refactor-design-agent  83.5s  Cluster D design scan
+  - refactor-duplication-agent  101.5s  Cluster T duplication scan

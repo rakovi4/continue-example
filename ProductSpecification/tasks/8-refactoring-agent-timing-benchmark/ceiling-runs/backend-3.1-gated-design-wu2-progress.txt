@@ -1,0 +1,22 @@
+[17:32:50] hazard-01: START scan of story-1 scenario 3.1 design vs group 01-money-numbers-representation
+17:33:07 hazard-02: START scan of story 1 backend scenario 3.1 'Create task with title only' drafted design (Option B, domain-centric) against group 02-rerun-safety-ordering-atomicity
+[17:33:24] [hazard-scan-agent] hazard-03: START scenario 3.1 create-task design vs group 03 concurrency
+hazard-04: 17:33:28 START scan artifact=story01/backend-scenario-3.1 'Create task with title only' (Option B domain-centric design) group=04-data-lifecycle-schema.md
+[17:33:51] hazard-05: START: scanning story-1 backend scenario 3.1 design vs group 05-request-boundary-input
+hazard-06: 17:34:04 START — artifact: story 01 backend scenario 3.1 'Create task with title only' drafted design (Option B, domain-centric); group: 06-scale-resource-limits
+[17:34:12] [hazard-scan-agent] hazard-03: DONE verdict GAPS, 2 fired classes ungarded, 2 dismissed
+[17:34:20] hazard-07: START: scan design story-1 backend scenario 3.1 (create task title only) vs group 07-time-operability-disclosure
+17:34:23 hazard-02: DONE verdict=GAPS gaps=2 (idempotency-inbound, transaction-boundary) fired=2/5 covered=0 seams=4
+[17:34:25] hazard-01: DONE verdict=GAPS 3/3 classes fired, 7 gaps, 4 seams flagged
+17:34:39 hazard-08: START scan of story-1 backend scenario 3.1 design (Option B, domain-centric) against group 08-client-frontend.md
+[17:35:01] hazard-05: DONE: verdict GAPS - 4 fired classes, 4 gaps, 1 not-fired, 3 seams
+hazard-06: 17:35:01 DONE — verdict GAPS, 1 gap (uncapped request body), 2 seams flagged to group 3
+hazard-04: 17:35:24 DONE verdict=GAPS gaps=4 (state-machine: dual source of truth for column + no read-back; schema: undefined unknown-enum policy now blocks create path; schema: nothing asserts the persisted row; destructive: save() is merge-upsert, no neighbours-intact guard) seams=4
+17:35:29 hazard-08: DONE block dismissal (out of altitude), 0 gaps, 2 seams flagged
+[17:36:22] hazard-07: DONE: verdict GAPS - 7 gaps across 3 fired classes, 1 not-fired; 4 seams flagged
+hazard-synthesis: 17:38:18 START — synthesis pass over 8 seams (S1-S8), artifact: story 1 backend scenario 3.1 drafted design
+hazard-synthesis: 17:41:11 DONE — 8 seams reconciled: 4 MUST-FIX before 3.1 red (S1 position race, S2 zone pin, S3 read-back, S4 wire pin), 4 DEFERRED with named owners (S5, S6->4.2, S7 accepted-risk, S8 new infra task); corrected S4 premise (security '5.3' does not exist; scenario is 05 §2.1) and S5 premise (column_type is NOT NULL)
+17:43:58 [premortem] START: reviewing 1ad5418 design 3.1 create-task write path
+agent-review: 17:46:35 START review of 1ad5418 (design 3.1 create-task write path)
+agent-review: 17:46:43 DONE verdict=CONCERNS concerns=5 (round-trip guard absent from ADR; TZ setting unguarded+wrong key path; id origin unfixed; addToToDo mutates incidentally-mutable list; column named twice)
+17:48:34 [premortem] DONE: CONCERNS - 3 credible incidents (orphaned S3 guard, unobservable S2 timezone, unnamed id source)

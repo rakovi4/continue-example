@@ -1,0 +1,181 @@
+Agent time-budget — session 28544eed-4ba3-423c-9944-3c2dee8b6d09 (27 step(s))
+
+Step 1: 2026-07-16T13:08:19.870Z -> 2026-07-16T13:15:19.333Z   wall=419.5s  busy=419.5s  overlap_saved=0s  serial_tail=0s
+  - red-agent  419.5s  red-acceptance 3.1 (gated rerun)
+
+Step 2: 2026-07-16T13:15:37.059Z -> 2026-07-16T13:24:33.899Z   wall=536.8s  busy=1004.5s  overlap_saved=467.7s  serial_tail=0s
+  - test-review-agent  536.8s  test-review 3.1 (gated rerun)
+  - test-review-assertions-agent  81.8s  Cluster A assertions scan
+  - test-review-placement-agent  70.3s  Cluster P placement scan
+  - test-review-statements-agent  98.4s  Cluster S statements scan
+  - test-runner  217.2s  Run acceptance backend tests
+
+Step 3: 2026-07-16T14:32:41.028Z -> 2026-07-16T14:37:19.123Z   wall=278.1s  busy=1041s  overlap_saved=762.9s  serial_tail=86.8s
+  - hazard-scan-agent  156.3s  Hazard scan group 1
+  - hazard-scan-agent  113.1s  Hazard scan group 2
+  - hazard-scan-agent  99s  Hazard scan group 3
+  - hazard-scan-agent  155.8s  Hazard scan group 4
+  - hazard-scan-agent  132.3s  Hazard scan group 5
+  - hazard-scan-agent  98.5s  Hazard scan group 6
+  - hazard-scan-agent  191.3s  Hazard scan group 7
+  - hazard-scan-agent  94.7s  Hazard scan group 8
+
+Step 4: 2026-07-16T14:38:09.287Z -> 2026-07-16T14:42:08.240Z   wall=239s  busy=239s  overlap_saved=0s  serial_tail=0s
+  - hazard-scan-agent  239s  Hazard seam synthesis
+
+Step 5: 2026-07-16T14:43:36.524Z -> 2026-07-16T14:49:15.229Z   wall=338.7s  busy=549.4s  overlap_saved=210.7s  serial_tail=6.3s
+  - agent-review-agent  217s  Pre-commit agent review
+  - premortem-agent  332.4s  Pre-commit premortem
+
+Step 6: 2026-07-16T14:55:52.458Z -> 2026-07-16T14:59:54.005Z   wall=241.5s  busy=241.5s  overlap_saved=0s  serial_tail=0s
+  - red-agent  241.5s  red-usecase 3.1
+
+Step 7: 2026-07-16T15:00:09.769Z -> 2026-07-16T15:05:54.341Z   wall=344.6s  busy=679.9s  overlap_saved=335.3s  serial_tail=0s
+  - test-review-agent  344.6s  test-review red-usecase 3.1
+  - test-review-assertions-agent  135.5s  Assertion detector cluster A
+  - test-review-placement-agent  96.4s  Placement detector cluster P
+  - test-review-statements-agent  103.5s  Statements detector cluster S
+
+Step 8: 2026-07-16T15:06:39.370Z -> 2026-07-16T15:12:15.595Z   wall=336.2s  busy=1225.9s  overlap_saved=889.7s  serial_tail=10.4s
+  - refactor-agent  284.9s  refactor after red-usecase 3.1
+  - agent-review-agent  319.1s  agent-review over dec1457
+  - premortem-agent  325.8s  premortem over dec1457
+  - refactor-mechanics-agent  159.6s  Cluster M mechanics scan
+  - refactor-design-agent  79.5s  Cluster D design scan
+  - refactor-duplication-agent  57s  Cluster T duplication scan
+
+Step 9: 2026-07-16T15:27:38.449Z -> 2026-07-16T15:29:46.420Z   wall=128s  busy=128s  overlap_saved=0s  serial_tail=0s
+  - green-agent  128s  green-usecase 3.1
+
+Step 10: 2026-07-16T15:30:04.591Z -> 2026-07-16T15:32:46.224Z   wall=161.6s  busy=161.6s  overlap_saved=0s  serial_tail=0s
+  - coverage-agent  161.6s  test-coverage usecase --focus
+
+Step 11: 2026-07-16T15:33:32.296Z -> 2026-07-16T15:40:07.346Z   wall=395s  busy=1237.9s  overlap_saved=842.9s  serial_tail=10.4s
+  - refactor-agent  384.7s  refactor after green-usecase 3.1
+  - agent-review-agent  190.3s  agent-review of 5d3104f
+  - premortem-agent  372.3s  premortem of 5d3104f
+  - refactor-mechanics-agent  107s  Mechanics detector scan
+  - refactor-design-agent  122.7s  Design detector scan
+  - refactor-duplication-agent  61s  Duplication detector scan
+
+Step 12: 2026-07-16T15:45:43.582Z -> 2026-07-16T15:49:14.669Z   wall=211.1s  busy=211.1s  overlap_saved=0s  serial_tail=0s
+  - red-agent  211.1s  red-usecase coverage ColumnNotFoundException
+
+Step 13: 2026-07-16T15:49:36.724Z -> 2026-07-16T15:55:37.630Z   wall=360.9s  busy=749.1s  overlap_saved=388.1s  serial_tail=0s
+  - test-review-agent  360.9s  test-review WU5 red-usecase coverage
+  - test-review-assertions-agent  133.8s  Assertions detector
+  - test-review-placement-agent  164s  Placement detector
+  - test-review-statements-agent  90.3s  Statements-quality detector
+
+Step 14: 2026-07-16T15:56:25.353Z -> 2026-07-16T16:00:40.104Z   wall=254.8s  busy=961.3s  overlap_saved=706.5s  serial_tail=0s
+  - refactor-agent  254.8s  refactor WU5
+  - agent-review-agent  163.1s  agent-review WU5
+  - refactor-mechanics-agent  110.9s  Mechanics detector scan
+  - premortem-agent  179.5s  premortem WU5
+  - refactor-design-agent  171s  Design detector scan
+  - refactor-duplication-agent  82s  Duplication detector scan
+
+Step 15: 2026-07-16T16:02:51.813Z -> 2026-07-16T16:07:40.826Z   wall=289s  busy=289s  overlap_saved=0s  serial_tail=0s
+  - red-agent  289s  red-adapter storage 3.1
+
+Step 16: 2026-07-16T16:08:02.444Z -> 2026-07-16T16:14:25.953Z   wall=383.5s  busy=846.2s  overlap_saved=462.6s  serial_tail=0s
+  - test-review-agent  383.5s  test-review WU8 red-adapter storage
+  - test-review-assertions-agent  134s  Assertion detector cluster A
+  - test-review-placement-agent  176.9s  Placement detector cluster P
+  - test-review-statements-agent  124.7s  Statements detector cluster S
+  - test-review-selenium-agent  27.1s  Selenium detector cluster Se
+
+Step 17: 2026-07-16T16:15:02.595Z -> 2026-07-16T16:22:13.431Z   wall=430.8s  busy=1298.6s  overlap_saved=867.8s  serial_tail=28.3s
+  - refactor-agent  328s  refactor WU8
+  - agent-review-agent  207.2s  agent-review WU8
+  - premortem-agent  402.5s  premortem WU8
+  - refactor-mechanics-agent  174.1s  Mechanics detector cluster M
+  - refactor-design-agent  108.6s  Design detector cluster D
+  - refactor-duplication-agent  78.3s  Duplication detector cluster T
+
+Step 18: 2026-07-16T16:23:19.463Z -> 2026-07-16T16:25:02.666Z   wall=103.2s  busy=103.2s  overlap_saved=0s  serial_tail=0s
+  - green-agent  103.2s  green-adapter storage 3.1
+
+Step 19: 2026-07-16T16:25:32.626Z -> 2026-07-16T16:28:06.187Z   wall=153.6s  busy=153.6s  overlap_saved=0s  serial_tail=0s
+  - coverage-agent  153.6s  test-coverage storage --focus
+
+Step 20: 2026-07-16T16:28:52.700Z -> 2026-07-16T16:36:59.724Z   wall=487s  busy=1503.7s  overlap_saved=1016.7s  serial_tail=0s
+  - refactor-agent  487s  refactor WU9
+  - agent-review-agent  231.3s  agent-review WU9
+  - premortem-agent  237.6s  premortem WU9
+  - refactor-mechanics-agent  228.6s  Mechanics detector scan
+  - refactor-design-agent  199.7s  Design detector scan
+  - refactor-duplication-agent  119.5s  Duplication detector scan
+
+Step 21: 2026-07-16T16:37:51.164Z -> 2026-07-16T16:41:14.366Z   wall=203.2s  busy=203.2s  overlap_saved=0s  serial_tail=0s
+  - red-agent  203.2s  red-adapter rest 3.1
+
+Step 22: 2026-07-16T16:41:36.486Z -> 2026-07-16T16:47:24.863Z   wall=348.4s  busy=763.7s  overlap_saved=415.3s  serial_tail=0s
+  - test-review-agent  348.4s  test-review WU10 red-adapter rest
+  - test-review-assertions-agent  123.1s  Assertion cluster scan
+  - test-review-placement-agent  75.4s  Placement cluster scan
+  - test-review-statements-agent  130.7s  Statements cluster scan
+  - test-runner  86.1s  Run rest module tests
+
+Step 23: 2026-07-16T16:48:09.601Z -> 2026-07-16T16:55:15.518Z   wall=425.9s  busy=1496.4s  overlap_saved=1070.5s  serial_tail=0s
+  - refactor-agent  425.9s  refactor WU10
+  - agent-review-agent  320.7s  agent-review WU10
+  - refactor-mechanics-agent  97.3s  Mechanics scan rest module
+  - refactor-design-agent  131.4s  Design scan rest module
+  - premortem-agent  347.3s  premortem WU10
+  - refactor-duplication-agent  173.8s  Duplication scan rest module
+
+Step 24: 2026-07-16T16:56:13.857Z -> 2026-07-16T16:58:47.792Z   wall=153.9s  busy=153.9s  overlap_saved=0s  serial_tail=0s
+  - green-agent  153.9s  green-adapter rest 3.1
+
+Step 25: 2026-07-16T16:59:12.202Z -> 2026-07-16T17:02:00.917Z   wall=168.7s  busy=168.7s  overlap_saved=0s  serial_tail=0s
+  - coverage-agent  168.7s  test-coverage rest --focus
+
+Step 26: 2026-07-16T17:11:09.289Z -> 2026-07-16T17:16:50.047Z   wall=340.8s  busy=1063.2s  overlap_saved=722.5s  serial_tail=16.2s
+  - refactor-agent  269.5s  Refactor WU11 rest adapter
+  - agent-review-agent  158.6s  Review WU11 behavior commit
+  - premortem-agent  324.6s  Premortem WU11 behavior commit
+  - refactor-mechanics-agent  112.3s  Mechanics scan cluster M
+  - refactor-design-agent  122.8s  Design scan cluster D
+  - refactor-duplication-agent  75.5s  Duplication scan cluster T
+
+Step 27: 2026-07-16T17:24:29.245Z -> 2026-07-16T17:29:43.439Z   wall=314.2s  busy=509.3s  overlap_saved=195.1s  serial_tail=0s
+  - agent-review-agent  314.2s  Review green-acceptance commit
+  - premortem-agent  195.1s  Premortem green-acceptance commit
+
+Untracked stops (spawn paths SubagentStart never recorded — excluded from every step; busy totals under-count them):
+  - agent_id=a04f3ed09639f55a0 ts=2026-07-16T13:27:15.933Z
+  - agent_id=a02d4e71f870b8037 ts=2026-07-16T13:30:54.882Z
+  - agent_id=a9b99a586347660f2 ts=2026-07-16T14:03:19.102Z
+  - agent_id=a1e6f5529c70078ab ts=2026-07-16T14:08:25.566Z
+  - agent_id=aec66f467c7833e4e ts=2026-07-16T14:15:58.079Z
+  - agent_id=a35305a5fa3cdf730 ts=2026-07-16T14:22:37.287Z
+  - agent_id=adf48f83507bdb0d7 ts=2026-07-16T14:28:27.651Z
+  - agent_id=a63aa9f6da674fdd5 ts=2026-07-16T14:28:58.878Z
+  - agent_id=a8bfd5eab8920ab79 ts=2026-07-16T14:51:16.458Z
+  - agent_id=a40c5635d4614d127 ts=2026-07-16T14:55:13.905Z
+  - agent_id=ae1a13d9f6db7f6fe ts=2026-07-16T15:14:15.060Z
+  - agent_id=a0280256fc5188ea2 ts=2026-07-16T15:17:16.636Z
+  - agent_id=a462301b76e13ee4c ts=2026-07-16T15:20:44.885Z
+  - agent_id=a193e26b51d601e42 ts=2026-07-16T15:24:38.839Z
+  - agent_id=a2aa2df315f8653aa ts=2026-07-16T15:27:00.038Z
+  - agent_id=a2d31ae0a802ef863 ts=2026-07-16T15:42:37.278Z
+  - agent_id=a54a785ea6a990797 ts=2026-07-16T15:44:50.342Z
+  - agent_id=aa947a7b9b71ec210 ts=2026-07-16T17:08:11.766Z
+  - agent_id=a67a3f43fab4370b6 ts=2026-07-16T17:10:26.318Z
+  - agent_id=addff0d9b0ee72667 ts=2026-07-16T17:21:24.459Z
+  - agent_id=adc9372d3e419f64a ts=2026-07-16T17:22:16.685Z
+
+Launch-ack tool pairs (dispatch->return < 1s — background launch acknowledgment, NOT agent duration):
+  - test-review-placement-agent  toolu_017Zi4L6Uvc2uxQ5fsQrrije  27ms
+  - refactor-duplication-agent  toolu_0193WsrUnC2cMw2ZCtEpqBEQ  26ms
+  - test-review-statements-agent  toolu_01Bmh5MFSViCL3z2GKUYi1GJ  24ms
+  - test-review-assertions-agent  toolu_01EnHdeGZEMicN8ktKMqHBUY  32ms
+  - refactor-mechanics-agent  toolu_01JuvM53ytiT4Yc5iz6e9jX9  19ms
+  - refactor-design-agent  toolu_01MzdKyZa1QQek4VZYGLJxug  22ms
+
+WARN unclosed subagent_start (still running, or crashed without a stop):
+  - agent_id=a09789829737dbe3c type=refactor-agent since 2026-07-16T13:25:38.815Z
+  - agent_id=a68cb63e7ff2d2964 type=refactor-mechanics-agent since 2026-07-16T13:26:01.757Z
+  - agent_id=a1f7f3bbb7ee86114 type=refactor-design-agent since 2026-07-16T13:26:05.449Z
+  - agent_id=ad1b8f6549cb3fdad type=refactor-duplication-agent since 2026-07-16T13:26:08.628Z

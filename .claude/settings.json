@@ -12,5 +12,76 @@
   "statusLine": {
     "type": "command",
     "command": "bash .claude/statusline.sh"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent-timing.sh\" dispatch 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent-timing.sh\" return 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent-timing.sh\" return_failure 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent-timing.sh\" subagent_start 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{ bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent-timing-smoke.sh\" && bash \"$CLAUDE_PROJECT_DIR/infrastructure/scripts/agent-timing-report-smoke.sh\" && bash \"$CLAUDE_PROJECT_DIR/infrastructure/scripts/resolve-java-home-smoke.sh\" && bash \"$CLAUDE_PROJECT_DIR/infrastructure/scripts/script-modes-smoke.sh\" && bash \"$CLAUDE_PROJECT_DIR/infrastructure/scripts/run-backend-smoke.sh\"; } >/dev/null 2>&1 || printf '{\"systemMessage\":\"smoke checks FAILED — timing instrumentation/aggregation, JAVA_HOME resolution, entry-point exec bits, or backend start-verification may be broken; run: bash .claude/hooks/agent-timing-smoke.sh && bash infrastructure/scripts/agent-timing-report-smoke.sh && bash infrastructure/scripts/resolve-java-home-smoke.sh && bash infrastructure/scripts/script-modes-smoke.sh && bash infrastructure/scripts/run-backend-smoke.sh\"}'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/agent-timing.sh\" subagent_stop 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }

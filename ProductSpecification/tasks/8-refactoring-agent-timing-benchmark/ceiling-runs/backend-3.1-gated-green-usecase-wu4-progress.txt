@@ -1,0 +1,49 @@
+18:27:17 orchestrator: WU4 start (green-usecase 3.1), log cleared
+18:28:20 green-agent: context read complete
+18:28:33 green-agent: implementation plan fixed
+18:28:58 green-agent: production code written
+18:28:58 green-agent: test run started
+18:29:14 green-agent: GREEN confirmed - 6 passed / 0 failed
+18:30:32 coverage: context read complete
+18:32:15 coverage: focus set analysed
+18:32:20 coverage: gaps identified - 1
+18:32:29 coverage: progress.md updated
+18:32:29 coverage: verdict reached - 1 reachable gap (ADR-forced TO_DO guard), 2 red/green steps added, no dead code
+18:33:15 orchestrator: coverage done, starting behavior commit
+18:33:15 orchestrator: behavior commit landed 5d3104f
+18:33:58 refactor: context read complete
+18:33:58 refactor: detector fan-out dispatched
+18:33:59 agent-review: commit read (5d3104f, green-usecase 3.1)
+18:33:59 premortem: START commit 5d3104f (green-usecase 3.1)
+[18:34:21] [refactor-mechanics-agent] START: cluster M scan of green-usecase 3.1 (Board, ColumnNotFoundException, CreateTaskUseCase)
+18:34:33 agent-review: OPEN thread A - board null/absent in fake, mutation aliasing, position derivation
+[18:34:44] [refactor-design-agent] START: cluster D scan of green-usecase 3.1 (Board, CreateTaskUseCase)
+18:34:57 premortem: commit read; 5 incident hypotheses drafted
+18:35:07 agent-review: OPEN thread B - title-only path through REST dto: null vs empty description
+[18:35:10] [refactor-duplication-agent] START: cluster T scan of green-usecase 3.1 (Board, CreateTaskUseCase)
+[18:35:10] [refactor-duplication-agent] SCAN: A14/A22 clean; A23-A54 tests read-only; frontend rows N/A (backend)
+[18:35:10] [refactor-duplication-agent] DONE: no cluster T candidates
+[18:35:31] [refactor-mechanics-agent] SCAN: A8 x2 (single-use pass-through locals), A21/A10/A32 borderline; 15 rows clean
+[18:35:31] [refactor-mechanics-agent] DONE: cluster M read-only scan complete, no edits made
+[18:35:45] [refactor-design-agent] SCAN: 1 candidate — Board L22-23 mutates Column's task list (A3/A7/B8)
+[18:35:45] [refactor-design-agent] DONE: cluster D scan complete, read-only, no edits applied
+18:35:55 agent-review: CLOSE thread B - no defect: CreateTaskRequestDto null-coalesces description to empty string
+18:35:55 agent-review: OPEN thread C - Column.tasks mutability contract across fake vs H2BoardStorage
+18:36:24 agent-review: CLOSE thread C - real: Column.tasks mutability unguaranteed on H2 path (Collectors.toList), fake uses ArrayList
+18:36:27 refactor: detector findings collected (M: 2 unambiguous A8 single-use locals + 4 by-the-letter hits detector itself argues NO ACTION; D: one finding three ways - A3/A7/B8 Board mutates Column's task list, fix = move append onto Column; T: no candidates)
+18:36:29 agent-review: verdict CONCERNS (2 findings)
+18:36:56 premortem: hypothesis 'silent save (no test observes taskStorage.save)' OPEN
+18:36:56 premortem: hypothesis 'ColumnNotFoundException maps to 500, no REST handler' OPEN
+18:36:56 premortem: hypothesis 'addToToDo mutates caller-owned list of unspecified mutability' OPEN
+18:36:56 premortem: hypothesis 'hibernate.jdbc.time_zone unset at first-ever write' OPEN
+18:36:56 premortem: hypothesis 'test-only cleanup endpoint now destroys real data' OPEN
+18:38:21 refactor: fix applied - moved task append onto Column (owner of tasks list); Board.addToToDo now delegates - resolves A3 feature envy + A7 repeated toDo.getTasks() + B8 parent mutating child collection
+18:38:38 refactor: verification test run started
+18:39:37 premortem: hypothesis 'silent save (no test observes taskStorage.save)' CLOSED -> REMOTE, already recorded in brief + commit msg; its guard is the known S3 orphan
+18:39:37 premortem: hypothesis 'ColumnNotFoundException maps to 500, no REST handler' CLOSED -> REMOTE, H2BoardStorage always builds all 3 columns from ColumnType.values(), so unreachable in prod
+18:39:37 premortem: hypothesis 'addToToDo mutates caller-owned list of unspecified mutability' CLOSED -> REMOTE, holds today; green-acceptance closes it; exposure window app is unbootable anyway
+18:39:37 premortem: hypothesis 'hibernate.jdbc.time_zone unset at first-ever write' CLOSED -> REMOTE, premise falsified: Hibernate 6.4.4 defaults Instant to TIMESTAMP_UTC, binds/extracts with explicit UTC_CALENDAR
+18:39:37 premortem: hypothesis 'test-only cleanup endpoint now destroys real data' CLOSED -> CREDIBLE, @Profile("!prod") is fail-open and this unit is the first ever writer; no named deferral owns it
+18:39:37 premortem: VERDICT: CONCERNS, 1 credible incident
+18:39:38 refactor: verdict reached — 1 refactoring applied (move append onto Column), 4 candidate groups NO ACTION per restraint; usecase 6/6, rest 3/3, storage 1/1 — 10 passed, 0 failed (domain:test NO-SOURCE, module has no tests)
+18:40:26 orchestrator: WU4 end, refactor commit 625f9ea
